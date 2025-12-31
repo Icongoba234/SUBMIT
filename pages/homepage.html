@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CitizenVoice - Every Voice Matters in Building Better Communities</title>
+    <link rel="stylesheet" href="../css/main.css" />
+    <meta name="description" content="Transform your civic engagement with CitizenVoice - a transparent platform where every citizen's voice creates measurable change in their community." />
+  <script type="module" defer src="https://static.rocket.new/rocket-shot.js?v=0.0.1"></script>
+  
+  <script type="module" async src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Fcitizenvoi3231back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.12"></script>
+  <script type="module" defer src="https://static.rocket.new/rocket-shot.js?v=0.0.2"></script>
+  </head>
+<body class="bg-background">
+    <!-- Navigation Header -->
+    <nav class="bg-surface shadow-card sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <svg class="h-8 w-8 text-primary mr-3" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2L13.09 8.26L20 9L13.09 9.74L12 16L10.91 9.74L4 9L10.91 8.26L12 2Z"/>
+                        <circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    <span class="text-xl font-bold text-primary">CitizenVoice</span>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="homepage.html" class="text-primary font-semibold">Home</a>
+                    <a href="submit_complaint.html" class="text-text-secondary hover:text-primary transition-colors">Submit Complaint</a>
+                    <a href="track_progress.html" class="text-text-secondary hover:text-primary transition-colors">Track Progress</a>
+                    <a href="public_transparency_hub.html" class="text-text-secondary hover:text-primary transition-colors">Public Hub</a>
+                    <a href="community_forum.html" class="text-text-secondary hover:text-primary transition-colors">Community</a>
+        <a href="login.html" class="text-text-secondary hover:text-primary transition-colors">Agency  Login</a>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-text-secondary hover:text-primary">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-surface border-t border-border">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="homepage.html" class="block px-3 py-2 text-primary font-semibold">Home</a>
+                <a href="submit_complaint.html" class="block px-3 py-2 text-text-secondary hover:text-primary">Submit Complaint</a>
+                <a href="track_progress.html" class="block px-3 py-2 text-text-secondary hover:text-primary">Track Progress</a>
+                <a href="public_transparency_hub.html" class="block px-3 py-2 text-text-secondary hover:text-primary">Public Hub</a>
+                <a href="community_forum.html" class="block px-3 py-2 text-text-secondary hover:text-primary">Community</a>
+        <a href="login.html" class="block px-3 py-2 text-primary font-semibold">
+   </a>
+            
+        </div>
+    </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative bg-gradient-to-br from-primary-50 to-secondary-50 py-20 overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <svg class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <polygon fill="currentColor" points="0,0 100,0 80,100 0,100"/>
+            </svg>
+        </div>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="text-center lg:text-left">
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-text-primary mb-6 text-balance">
+                        Every Voice Matters in Building 
+                        <span class="text-primary">Better Communities</span>
+                    </h1>
+                    <p class="text-lg md:text-xl text-text-secondary mb-8 max-w-2xl">
+                        Transform frustration into action. CitizenVoice connects you directly with local agencies, 
+                        ensuring transparency, accountability, and real solutions for community issues.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                        <a href="submit_complaint.html" class="btn-primary text-center">
+                            Submit Your Complaint
+                        </a>
+                        <a href="public_transparency_hub.html" class="btn-outline text-center">
+                            View Public Issues
+                        </a>
+                    </div>
+                </div>
+                <div class="relative">
+                    <img src="https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3" alt="Citizens engaging in community discussion" class="rounded-2xl shadow-hover w-full h-96 object-cover" loading="lazy" onerror="this.src='https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'; this.onerror=null;" />
+                    <div class="absolute -bottom-6 -right-6 bg-surface p-4 rounded-xl shadow-card">
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-primary">98%</div>
+                            <div class="text-sm text-text-secondary">Resolution Rate</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Real-time Statistics -->
+    <section class="py-16 bg-surface">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-text-primary mb-4">Real-Time Community Impact</h2>
+                <p class="text-lg text-text-secondary max-w-2xl mx-auto">
+                    See how Citizen Voice is making a difference in communities across the nation
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="text-center">
+                    <div class="bg-primary-50 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-10 h-10 text-primary" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <div class="text-3xl font-bold text-primary mb-2" id="complaints-resolved">12,847</div>
+                    <div class="text-text-secondary">Complaints Resolved</div>
+                </div>
+                
+                <div class="text-center">
+                    <div class="bg-secondary-50 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-10 h-10 text-secondary" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20a3 3 0 01-3-3v-2a3 3 0 013-3h4a3 3 0 013 3v2a3 3 0 01-3 3z"/>
+                        </svg>
+                    </div>
+                    <div class="text-3xl font-bold text-secondary mb-2" id="citizens-helped">45,293</div>
+                    <div class="text-text-secondary">Citizens Helped</div>
+                </div>
+                
+                <div class="text-center">
+                    <div class="bg-accent-50 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-10 h-10 text-accent" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                        </svg>
+                    </div>
+                    <div class="text-3xl font-bold text-accent mb-2" id="agencies-participating">187</div>
+                    <div class="text-text-secondary">Agencies Participating</div>
+                </div>
+                
+                <div class="text-center">
+                    <div class="bg-warning-50 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-10 h-10 text-warning" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <div class="text-3xl font-bold text-warning mb-2">4.2 days</div>
+                    <div class="text-text-secondary">Avg. Response Time</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Complaint Submission -->
+    <section class="py-16 bg-gradient-to-r from-primary-600 to-primary-700">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-white mb-4">Quick Complaint Submission</h2>
+                <p class="text-lg text-primary-100">
+                    Report an issue in your community and track its resolution in real-time
+                </p>
+            </div>
+            
+            <div class="bg-surface rounded-2xl p-8 shadow-hover">
+                <form class="space-y-6">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-semibold text-text-primary mb-2">Issue Category</label>
+                            <select class="input-field">
+                                <option>Select a category</option>
+                                <option>Road & Infrastructure</option>
+                                <option>Public Safety</option>
+                                <option>Waste Management</option>
+                                <option>Water & Utilities</option>
+                                <option>Parks & Recreation</option>
+                                <option>Housing & Zoning</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-text-primary mb-2">Priority Level</label>
+                            <select class="input-field">
+                                <option>Select priority</option>
+                                <option>Low - General Concern</option>
+                                <option>Medium - Needs Attention</option>
+                                <option>High - Safety Issue</option>
+                                <option>Critical - Emergency</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-semibold text-text-primary mb-2">Location</label>
+                        <input type="text" placeholder="Enter address or use current location" class="input-field" />
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-semibold text-text-primary mb-2">Describe the Issue</label>
+                        <textarea rows="4" placeholder="Provide details about the issue you're experiencing..." class="input-field resize-none"></textarea>
+                    </div>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <button type="button" class="flex-1 border-2 border-border-light text-text-secondary px-6 py-3 rounded-lg font-semibold hover:border-primary hover:text-primary transition-colors">
+                            <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                            Add Photos
+                        </button>
+                        <a href="submit_complaint.html" class="flex-1 btn-primary text-center">
+                            Submit Full Complaint
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trending Issues -->
+    <section class="py-16 bg-background">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center mb-12">
+                <div>
+                    <h2 class="text-3xl font-bold text-text-primary mb-4">Trending Issues</h2>
+                    <p class="text-lg text-text-secondary">Most reported issues in your area this week</p>
+                </div>
+                <a href="public_transparency_hub.html" class="btn-outline">View All Issues</a>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="card">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="bg-accent-50 p-3 rounded-lg">
+                            <svg class="w-6 h-6 text-accent" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"/>
+                            </svg>
+                        </div>
+                        <span class="status-error">High Priority</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-text-primary mb-2">Pothole on Main Street</h3>
+                    <p class="text-text-secondary mb-4">Large pothole causing traffic delays and vehicle damage near downtown intersection.</p>
+                    <div class="flex items-center justify-between text-sm text-text-secondary">
+                        <span>23 reports</span>
+                        <span>2 days ago</span>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="bg-warning-50 p-3 rounded-lg">
+                            <svg class="w-6 h-6 text-warning" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+                            </svg>
+                        </div>
+                        <span class="status-warning">Medium Priority</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-text-primary mb-2">Streetlight Outage</h3>
+                    <p class="text-text-secondary mb-4">Streetlights out on Skye Street creating safety concerns for pedestrians.</p>
+                    <div class="flex items-center justify-between text-sm text-text-secondary">
+                        <span>15 reports</span>
+                        <span>1 week ago</span>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="bg-secondary-50 p-3 rounded-lg">
+                            <svg class="w-6 h-6 text-secondary" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                            </svg>
+                        </div>
+                        <span class="status-success">Resolved</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-text-primary mb-2">Missed Trash Collection</h3>
+                    <p class="text-text-secondary mb-4">Residential area experiencing irregular waste pickup schedule affecting multiple blocks.</p>
+                    <div class="flex items-center justify-between text-sm text-text-secondary">
+                        <span>8 reports</span>
+                        <span>Resolved yesterday</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Success Stories -->
+    <section class="py-16 bg-surface">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-text-primary mb-4">Success Stories</h2>
+                <p class="text-lg text-text-secondary max-w-2xl mx-auto">
+                    Real stories from citizens who made a difference in their communities
+                </p>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <div class="bg-secondary-50 p-6 rounded-2xl mb-6">
+                        <div class="flex items-center mb-4">
+                            <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3" alt="Sarah Martinez" class="w-12 h-12 rounded-full object-cover mr-4" loading="lazy" onerror="this.src='https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'; this.onerror=null;" />
+                            <div>
+                                <div class="font-semibold text-text-primary">Sarah Kamara</div>
+                                <div class="text-sm text-text-secondary">Downtown Resident</div>
+                            </div>
+                        </div>
+                        <p class="text-text-secondary italic">
+                            "I reported a broken water main that was flooding our street. Within 48 hours, 
+                            the city responded and had it fixed. CitizenVoice made it so easy to get help!"
+                        </p>
+                    </div>
+                    
+                    <div class="bg-primary-50 p-6 rounded-2xl">
+                        <div class="flex items-center mb-4">
+                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3" alt="Michael Chen" class="w-12 h-12 rounded-full object-cover mr-4" loading="lazy" onerror="this.src='https://images.pixabay.com/photo/2016/11/29/09/38/adult-1868750_1280.jpg'; this.onerror=null;" />
+                            <div>
+                                <div class="font-semibold text-text-primary">Michael Kargbo</div>
+                                <div class="text-sm text-text-secondary">Community Advocate</div>
+                            </div>
+                        </div>
+                        <p class="text-text-secondary italic">
+                            "The transparency features helped our neighborhood organize around a park renovation. 
+                            We could see other similar requests and work together for a better outcome."
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <img src="https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3" alt="Before: Damaged playground equipment" class="rounded-lg h-48 w-full object-cover" loading="lazy" onerror="this.src='https://images.pexels.com/photos/163064/play-stone-network-networked-interactive-163064.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'; this.onerror=null;" />
+                    <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3" alt="After: Renovated playground" class="rounded-lg h-48 w-full object-cover" loading="lazy" onerror="this.src='https://images.pixabay.com/photo/2016/11/14/04/45/elephant-1822636_1280.jpg'; this.onerror=null;" />
+                    <div class="col-span-2 text-center">
+                        <div class="bg-surface p-4 rounded-lg shadow-card">
+                            <div class="text-2xl font-bold text-secondary mb-1">14 Days</div>
+                            <div class="text-sm text-text-secondary">From Report to Resolution</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="py-16 bg-gradient-to-r from-secondary-600 to-secondary-700">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-bold text-white mb-4">Ready to Make a Difference?</h2>
+            <p class="text-lg text-secondary-100 mb-8 max-w-2xl mx-auto">
+                Join thousands of citizens who are actively improving their communities. 
+                Your voice matters, and together we can solve problems faster.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="submit_complaint.html" class="bg-white text-secondary-700 px-8 py-3 rounded-lg font-semibold hover:bg-secondary-50 transition-colors">
+                    Submit Your First Complaint
+                </a>
+                <a href="community_forum.html" class="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-secondary-700 transition-colors">
+                    Join the Community
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-text-primary text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <svg class="h-8 w-8 text-primary mr-3" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2L13.09 8.26L20 9L13.09 9.74L12 16L10.91 9.74L4 9L10.91 8.26L12 2Z"/>
+                            <circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                        <span class="text-xl font-bold">CitizenVoice</span>
+                    </div>
+                    <p class="text-gray-400 mb-4">
+                        Empowering citizens to create positive change in their communities through transparency and accountability.
+                    </p>
+                </div>
+                
+                <div>
+                    <h3 class="font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="submit_complaint.html" class="hover:text-white transition-colors">Submit Complaint</a></li>
+                        <li><a href="track_progress.html" class="hover:text-white transition-colors">Track Progress</a></li>
+                        <li><a href="public_transparency_hub.html" class="hover:text-white transition-colors">Public Hub</a></li>
+                        <li><a href="community_forum.html" class="hover:text-white transition-colors">Community Forum</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="font-semibold mb-4">Resources</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="javascript:void(0)" class="hover:text-white transition-colors">Citizen Rights Guide</a></li>
+                        <li><a href="javascript:void(0)" class="hover:text-white transition-colors">Filing Best Practices</a></li>
+                        <li><a href="javascript:void(0)" class="hover:text-white transition-colors">Legal Resources</a></li>
+                        <li><a href="javascript:void(0)" class="hover:text-white transition-colors">Help Center</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="font-semibold mb-4">Contact</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li>ibrahimgoba085@gmail.com</li>
+                        <li>+23277739013-CITIZEN</li>
+                        <li>24/7 Live Chat</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 CitizenVoice. All Rights Reserved. | Privacy Policy | Terms of Service</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Animate counters on page load
+        function animateCounter(elementId, targetValue, duration = 2000) {
+            const element = document.getElementById(elementId);
+            const startValue = 0;
+            const increment = targetValue / (duration / 16);
+            let currentValue = startValue;
+
+            const timer = setInterval(() => {
+                currentValue += increment;
+                if (currentValue >= targetValue) {
+                    currentValue = targetValue;
+                    clearInterval(timer);
+                }
+                element.textContent = Math.floor(currentValue).toLocaleString();
+            }, 16);
+        }
+
+        // Start counter animations when page loads
+        window.addEventListener('load', function() {
+            animateCounter('complaints-resolved', 12847);
+            animateCounter('citizens-helped', 45293);
+            animateCounter('agencies-participating', 187);
+        });
+    </script>
+<script id="dhws-dataInjector" src="../public/dhws-data-injector.js"></script>
+</body>
+</html>

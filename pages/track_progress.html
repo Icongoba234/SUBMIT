@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Track Progress - CitizenVoice</title>
+    <link rel="stylesheet" href="../css/main.css" />
+    <meta name="description" content="Track your complaint progress and see real-time updates from agencies working to resolve community issues." />
+  <script type="module" defer src="https://static.rocket.new/rocket-shot.js?v=0.0.1"></script>
+  
+  <script type="module" async src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Fcitizenvoi3231back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.12"></script>
+  <script type="module" defer src="https://static.rocket.new/rocket-shot.js?v=0.0.2"></script>
+  </head>
+<body class="bg-background">
+    <!-- Navigation Header -->
+    <nav class="bg-surface shadow-card sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <svg class="h-8 w-8 text-primary mr-3" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2L13.09 8.26L20 9L13.09 9.74L12 16L10.91 9.74L4 9L10.91 8.26L12 2Z"/>
+                        <circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    <span class="text-xl font-bold text-primary">CitizenVoice</span>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="homepage.html" class="text-text-secondary hover:text-primary transition-colors">Home</a>
+                    <a href="submit_complaint.html" class="text-text-secondary hover:text-primary transition-colors">Submit Complaint</a>
+                    <a href="track_progress.html" class="text-primary font-semibold">Track Progress</a>
+                    <a href="public_transparency_hub.html" class="text-text-secondary hover:text-primary transition-colors">Public Hub</a>
+                    <a href="community_forum.html" class="text-text-secondary hover:text-primary transition-colors">Community</a>
+                    <a href="login.html" class="btn-outline text-sm py-2 px-4">Agency Login</a>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-text-secondary hover:text-primary">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-surface border-t border-border">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="homepage.html" class="block px-3 py-2 text-text-secondary hover:text-primary">Home</a>
+                <a href="submit_complaint.html" class="block px-3 py-2 text-text-secondary hover:text-primary">Submit Complaint</a>
+                <a href="track_progress.html" class="block px-3 py-2 text-primary font-semibold">Track Progress</a>
+                <a href="public_transparency_hub.html" class="block px-3 py-2 text-text-secondary hover:text-primary">Public Hub</a>
+                <a href="community_forum.html" class="block px-3 py-2 text-text-secondary hover:text-primary">Community</a>
+                <a href="login.html" class="block px-3 py-2 text-primary font-semibold">Agency Login</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="bg-gradient-to-br from-primary-50 to-secondary-50 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
+                <div>
+                    <h1 class="text-3xl md:text-4xl font-bold text-text-primary mb-4">Track Your Progress</h1>
+                    <p class="text-lg text-text-secondary max-w-2xl">
+                        Monitor your complaints, view agency responses, and see the real-time impact of your civic engagement.
+                    </p>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="submit_complaint.html" class="btn-primary">
+                        Submit New Complaint
+                    </a>
+                    <button id="export-btn" class="btn-outline">
+                        <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                        </svg>
+                        Export Records
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dashboard Stats -->
+    <section class="py-8 bg-surface">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div class="text-center">
+                    <div class="bg-primary-50 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-3">
+                        <svg class="w-8 h-8 text-primary" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <div class="text-2xl font-bold text-primary mb-1">7</div>
+                    <div class="text-sm text-text-secondary">Total Complaints</div>
+                </div>
+                
+                <div class="text-center">
+                    <div class="bg-secondary-50 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-3">
+                        <svg class="w-8 h-8 text-secondary" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <div class="text-2xl font-bold text-secondary mb-1">4</div>
+                    <div class="text-sm text-text-secondary">Resolved</div>
+                </div>
+                
+                <div class="text-center">
+                    <div class="bg-warning-50 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-3">
+                        <svg class="w-8 h-8 text-warning" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <div class="text-2xl font-bold text-warning mb-1">2</div>
+                    <div class="text-sm text-text-secondary">In Progress</div>
+                </div>
+                
+                <div class="text-center">
+                    <div class="bg-accent-50 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-3">
+                        <svg class="w-8 h-8 text-accent" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/>
+                        </svg>
+                    </div>
+                    <div class="text-2xl font-bold text-accent mb-1">1</div>
+                    <div class="text-sm text-text-secondary">Under Review</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filters and Search -->
+    <section class="py-6 bg-background">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-surface rounded-lg shadow-card p-6">
+                <div class="flex flex-col lg:flex-row gap-4">
+                    <div class="flex-1">
+                        <input type="text" placeholder="Search your complaints..." class="input-field" />
+                    </div>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <select class="input-field min-w-48">
+                            <option>All Statuses</option>
+                            <option>Under Review</option>
+                            <option>In Progress</option>
+                            <option>Resolved</option>
+                            <option>Closed</option>
+                        </select>
+                        <select class="input-field min-w-48">
+                            <option>All Categories</option>
+                            <option>Road & Infrastructure</option>
+                            <option>Public Safety</option>
+                            <option>Waste Management</option>
+                            <option>Water & Utilities</option>
+                            <option>Parks & Recreation</option>
+                        </select>
+                        <input type="date" class="input-field" value="2025-01-01" />
+                        <input type="date" class="input-field" value="2025-10-01" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Complaints List -->
+    <section class="py-8 bg-background">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="space-y-6">
+                <!-- Complaint Item 1 -->
+                <div class="card">
+                    <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-4">
+                        <div class="flex-1">
+                            <div class="flex items-center gap-3 mb-2">
+                                <h3 class="text-xl font-semibold text-text-primary">Pothole on Elm Street</h3>
+                                <span class="status-error">High Priority</span>
+                            </div>
+                            <p class="text-text-secondary mb-2">Large pothole causing vehicle damage near intersection with Oak Avenue.</p>
+                            <div class="flex items-center gap-4 text-sm text-text-secondary">
+                                <span>ID: #CW-2025-001</span>
+                                <span>Category: Road & Infrastructure</span>
+                                <span>Submitted: Sep 15, 2025</span>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-lg font-semibold text-warning mb-1">In Progress</div>
+                            <div class="text-sm text-text-secondary">Last updated: 2 days ago</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Progress Timeline -->
+                    <div class="bg-background rounded-lg p-4 mb-4">
+                        <h4 class="font-semibold text-text-primary mb-3">Progress Timeline</h4>
+                        <div class="relative">
+                            <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
+                            <div class="space-y-4">
+                                <div class="flex items-start gap-4">
+                                    <div class="w-8 h-8 bg-secondary rounded-full flex items-center justify-center flex-shrink-0">
+                                        <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <div class="font-medium text-text-primary">Work Scheduled</div>
+                                        <div class="text-sm text-text-secondary">Repair crew assigned for Oct 3, 2025</div>
+                                        <div class="text-xs text-text-secondary">Sep 28, 2025 - Public Works Department</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-4">
+                                    <div class="w-8 h-8 bg-secondary rounded-full flex items-center justify-center flex-shrink-0">
+                                        <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <div class="font-medium text-text-primary">Site Inspection Completed</div>
+                                        <div class="text-sm text-text-secondary">Damage assessment and repair plan finalized</div>
+                                        <div class="text-xs text-text-secondary">Sep 20, 2025 - City Engineer</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-4">
+                                    <div class="w-8 h-8 bg-secondary rounded-full flex items-center justify-center flex-shrink-0">
+                                        <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <div class="font-medium text-text-primary">Complaint Acknowledged</div>
+                                        <div class="text-sm text-text-secondary">Assigned to Public Works Department</div>
+                                        <div class="text-xs text-text-secondary">Sep 15, 2025 - CitizenVoice System</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Progress Bar -->
+                    <div class="mb-4">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-sm font-medium text-text-primary">Resolution Progress</span>
+                            <span class="text-sm text-text-secondary">75%</span>
+                        </div>
+                        <div class="w-full bg-border-light rounded-full h-2">
+                            <div class="bg-warning h-2 rounded-full" style="width: 75%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-col sm:flex-row gap-3">
+                        <button class="btn-outline flex-1">View Details</button>
+                        <button class="btn-primary flex-1">Add to Calendar</button>
+                    </div>
+                </div>
+
+                <!-- Complaint Item 2 -->
+                <div class="card">
+                    <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-4">
+                        <div class="flex-1">
+                            <div class="flex items-center gap-3 mb-2">
+                                <h3 class="text-xl font-semibold text-text-primary">Broken Streetlight on Park Avenue</h3>
+                                <span class="status-success">Resolved</span>
+                            </div>
+                            <p class="text-text-secondary mb-2">Streetlight pole damaged creating safety hazard for pedestrians.</p>
+                            <div class="flex items-center gap-4 text-sm text-text-secondary">
+                                <span>ID: #CW-2025-002</span>
+                                <span>Category: Public Safety</span>
+                                <span>Submitted: Aug 28, 2025</span>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-lg font-semibold text-secondary mb-1">Resolved</div>
+                            <div class="text-sm text-text-secondary">Completed: Sep 12, 2025</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Progress Bar -->
+                    <div class="mb-4">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-sm font-medium text-text-primary">Resolution Progress</span>
+                            <span class="text-sm text-text-secondary">100%</span>
+                        </div>
+                        <div class="w-full bg-border-light rounded-full h-2">
+                            <div class="bg-secondary h-2 rounded-full" style="width: 100%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-secondary-50 rounded-lg p-4 mb-4">
+                        <div class="flex items-center gap-3 mb-2">
+                            <svg class="w-5 h-5 text-secondary" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            <span class="font-medium text-secondary">Resolution Complete</span>
+                        </div>
+                        <p class="text-text-secondary text-sm">New LED streetlight installed and tested. Safety hazard eliminated.</p>
+                    </div>
+                    
+                    <div class="flex flex-col sm:flex-row gap-3">
+                        <button class="btn-outline flex-1">View Timeline</button>
+                        <button class="btn-secondary flex-1">Rate Resolution</button>
+                    </div>
+                </div>
+
+                <!-- Complaint Item 3 -->
+                <div class="card">
+                    <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-4">
+                        <div class="flex-1">
+                            <div class="flex items-center gap-3 mb-2">
+                                <h3 class="text-xl font-semibold text-text-primary">Missed Trash Collection - Maple Street</h3>
+                                <span class="status-warning">Under Review</span>
+                            </div>
+                            <p class="text-text-secondary mb-2">Residential area experiencing irregular waste pickup affecting multiple blocks.</p>
+                            <div class="flex items-center gap-4 text-sm text-text-secondary">
+                                <span>ID: #CW-2025-003</span>
+                                <span>Category: Waste Management</span>
+                                <span>Submitted: Sep 30, 2025</span>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-lg font-semibold text-accent mb-1">Under Review</div>
+                            <div class="text-sm text-text-secondary">Last updated: 1 day ago</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Progress Bar -->
+                    <div class="mb-4">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-sm font-medium text-text-primary">Resolution Progress</span>
+                            <span class="text-sm text-text-secondary">25%</span>
+                        </div>
+                        <div class="w-full bg-border-light rounded-full h-2">
+                            <div class="bg-accent h-2 rounded-full" style="width: 25%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-warning-50 rounded-lg p-4 mb-4">
+                        <div class="flex items-center gap-3 mb-2">
+                            <svg class="w-5 h-5 text-warning" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            <span class="font-medium text-warning">Initial Review</span>
+                        </div>
+                        <p class="text-text-secondary text-sm">Complaint forwarded to Waste Management Department for investigation.</p>
+                    </div>
+                    
+                    <div class="flex flex-col sm:flex-row gap-3">
+                        <button class="btn-outline flex-1">View Details</button>
+                        <button class="btn-primary flex-1">Add Update</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Achievement Badges -->
+    <section class="py-12 bg-surface">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-8">
+                <h2 class="text-2xl font-bold text-text-primary mb-4">Your Civic Engagement Achievements</h2>
+                <p class="text-text-secondary">Recognizing your contributions to community improvement</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="text-center">
+                    <div class="bg-primary-50 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-10 h-10 text-primary" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-semibold text-text-primary mb-2">First Complaint</h3>
+                    <p class="text-sm text-text-secondary">Took your first step in civic engagement</p>
+                    <div class="text-xs text-primary mt-2">Earned Aug 28, 2025</div>
+                </div>
+                
+                <div class="text-center">
+                    <div class="bg-secondary-50 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-10 h-10 text-secondary" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20a3 3 0 01-3-3v-2a3 3 0 013-3h4a3 3 0 013 3v2a3 3 0 01-3 3z"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-semibold text-text-primary mb-2">Community Champion</h3>
+                    <p class="text-sm text-text-secondary">Helped resolve 5+ community issues</p>
+                    <div class="text-xs text-secondary mt-2">Earned Sep 20, 2025</div>
+                </div>
+                
+                <div class="text-center opacity-50">
+                    <div class="bg-border-light rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-10 h-10 text-text-secondary" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-semibold text-text-secondary mb-2">Problem Solver</h3>
+                    <p class="text-sm text-text-secondary">Complete 10 successful resolutions</p>
+                    <div class="text-xs text-text-secondary mt-2">3 more to unlock</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Notification Settings -->
+    <section class="py-12 bg-background">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="card">
+                <h2 class="text-2xl font-bold text-text-primary mb-6">Notification Preferences</h2>
+                
+                <div class="space-y-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="font-medium text-text-primary">Status Updates</div>
+                            <div class="text-sm text-text-secondary">Get notified when your complaint status changes</div>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" class="sr-only peer" checked />
+                            <div class="w-11 h-6 bg-border peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                        </label>
+                    </div>
+                    
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="font-medium text-text-primary">Agency Responses</div>
+                            <div class="text-sm text-text-secondary">Receive notifications for agency communications</div>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" class="sr-only peer" checked />
+                            <div class="w-11 h-6 bg-border peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                        </label>
+                    </div>
+                    
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="font-medium text-text-primary">Community Updates</div>
+                            <div class="text-sm text-text-secondary">Stay informed about similar issues in your area</div>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" class="sr-only peer" />
+                            <div class="w-11 h-6 bg-border peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                        </label>
+                    </div>
+                    
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="font-medium text-text-primary">Weekly Summary</div>
+                            <div class="text-sm text-text-secondary">Get a weekly digest of your complaint activity</div>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" class="sr-only peer" checked />
+                            <div class="w-11 h-6 bg-border peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="mt-8 pt-6 border-t border-border">
+                    <button class="btn-primary">Save Preferences</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-text-primary text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <svg class="h-8 w-8 text-primary mr-3" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2L13.09 8.26L20 9L13.09 9.74L12 16L10.91 9.74L4 9L10.91 8.26L12 2Z"/>
+                            <circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                        <span class="text-xl font-bold">CitizenVoice</span>
+                    </div>
+                    <p class="text-gray-400 mb-4">
+                        Empowering citizens to create positive change in their communities through transparency and accountability.
+                    </p>
+                </div>
+                
+                <div>
+                    <h3 class="font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="submit_complaint.html" class="hover:text-white transition-colors">Submit Complaint</a></li>
+                        <li><a href="track_progress.html" class="hover:text-white transition-colors">Track Progress</a></li>
+                        <li><a href="public_transparency_hub.html" class="hover:text-white transition-colors">Public Hub</a></li>
+                        <li><a href="community_forum.html" class="hover:text-white transition-colors">Community Forum</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="font-semibold mb-4">Resources</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="javascript:void(0)" class="hover:text-white transition-colors">Citizen Rights Guide</a></li>
+                        <li><a href="javascript:void(0)" class="hover:text-white transition-colors">Filing Best Practices</a></li>
+                        <li><a href="javascript:void(0)" class="hover:text-white transition-colors">Legal Resources</a></li>
+                        <li><a href="javascript:void(0)" class="hover:text-white transition-colors">Help Center</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="font-semibold mb-4">Contact</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li>support@citizenvoice.org</li>
+                        <li>1-800-CITIZEN</li>
+                        <li>24/7 Live Chat</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 CitizenVoice. All Rights Reserved. | Privacy Policy | Terms of Service</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Export functionality
+        document.getElementById('export-btn').addEventListener('click', function() {
+            // Simulate export functionality
+            alert('Exporting your complaint records as PDF...');
+        });
+
+        // Real-time updates simulation
+        function simulateRealTimeUpdates() {
+            // This would connect to WebSocket in a real application
+            console.log('Connected to real-time updates');
+        }
+
+        // Initialize real-time updates
+        window.addEventListener('load', function() {
+            simulateRealTimeUpdates();
+        });
+
+        // Touch gestures for mobile (swipe to refresh)
+        let startY = 0;
+        let endY = 0;
+
+        document.addEventListener('touchstart', function(e) {
+            startY = e.touches[0].clientY;
+        });
+
+        document.addEventListener('touchend', function(e) {
+            endY = e.changedTouches[0].clientY;
+            if (startY - endY > 50 && window.scrollY === 0) {
+                // Swipe down to refresh
+                location.reload();
+            }
+        });
+    </script>
+<script id="dhws-dataInjector" src="../public/dhws-data-injector.js"></script>
+</body>
+</html>

@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Submit Complaint - CitizenVoice</title>
+    <link rel="stylesheet" href="../css/main.css" />
+    <meta name="description" content="Submit your community complaint through CitizenVoice's streamlined, secure platform with photo upload, location mapping, and priority classification." />
+  <script type="module" defer src="https://static.rocket.new/rocket-shot.js?v=0.0.1"></script>
+  
+  <script type="module" async src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Fcitizenvoi3231back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.12"></script>
+  <script type="module" defer src="https://static.rocket.new/rocket-shot.js?v=0.0.2"></script>
+  </head>
+<body class="bg-background">
+    <!-- Navigation Header -->
+    <nav class="bg-surface shadow-card sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <svg class="h-8 w-8 text-primary mr-3" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2L13.09 8.26L20 9L13.09 9.74L12 16L10.91 9.74L4 9L10.91 8.26L12 2Z"/>
+                        <circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    <span class="text-xl font-bold text-primary">CitizenVoice</span>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="homepage.html" class="text-text-secondary hover:text-primary transition-colors">Home</a>
+                    <a href="submit_complaint.html" class="text-primary font-semibold">Submit Complaint</a>
+                    <a href="track_progress.html" class="text-text-secondary hover:text-primary transition-colors">Track Progress</a>
+                    <a href="public_transparency_hub.html" class="text-text-secondary hover:text-primary transition-colors">Public Hub</a>
+                    <a href="community_forum.html" class="text-text-secondary hover:text-primary transition-colors">Community</a>
+                    <a href="login.html" class="btn-outline text-sm py-2 px-4">Agency Login</a>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-text-secondary hover:text-primary">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-surface border-t border-border">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="homepage.html" class="block px-3 py-2 text-text-secondary hover:text-primary">Home</a>
+                <a href="submit_complaint.html" class="block px-3 py-2 text-primary font-semibold">Submit Complaint</a>
+                <a href="track_progress.html" class="block px-3 py-2 text-text-secondary hover:text-primary">Track Progress</a>
+                <a href="public_transparency_hub.html" class="block px-3 py-2 text-text-secondary hover:text-primary">Public Hub</a>
+                <a href="community_forum.html" class="block px-3 py-2 text-text-secondary hover:text-primary">Community</a>
+                <a href="agency_dashboard.html" class="block px-3 py-2 text-primary font-semibold">Agency Login</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="bg-gradient-to-br from-primary-50 to-secondary-50 py-12">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h1 class="text-3xl md:text-4xl font-bold text-text-primary mb-4">Submit Your Complaint</h1>
+                <p class="text-lg text-text-secondary max-w-2xl mx-auto">
+                    Help us improve your community by reporting issues. Your voice matters and creates real change.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Progress Indicator -->
+    <section class="bg-surface py-6 border-b border-border">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <div class="flex items-center">
+                        <div id="step-1-indicator" class="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center text-sm font-semibold">1</div>
+                        <span class="ml-2 text-sm font-medium text-primary">Category</span>
+                    </div>
+                    <div class="w-12 h-0.5 bg-border"></div>
+                    <div class="flex items-center">
+                        <div id="step-2-indicator" class="w-8 h-8 bg-border text-text-secondary rounded-full flex items-center justify-center text-sm font-semibold">2</div>
+                        <span class="ml-2 text-sm font-medium text-text-secondary">Details</span>
+                    </div>
+                    <div class="w-12 h-0.5 bg-border"></div>
+                    <div class="flex items-center">
+                        <div id="step-3-indicator" class="w-8 h-8 bg-border text-text-secondary rounded-full flex items-center justify-center text-sm font-semibold">3</div>
+                        <span class="ml-2 text-sm font-medium text-text-secondary">Evidence</span>
+                    </div>
+                    <div class="w-12 h-0.5 bg-border"></div>
+                    <div class="flex items-center">
+                        <div id="step-4-indicator" class="w-8 h-8 bg-border text-text-secondary rounded-full flex items-center justify-center text-sm font-semibold">4</div>
+                        <span class="ml-2 text-sm font-medium text-text-secondary">Review</span>
+                    </div>
+                </div>
+                <div class="text-sm text-text-secondary">
+                    <span id="progress-text">Step 1 of 4</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Form Container -->
+    <section class="py-12">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <form id="complaint-form" class="space-y-8">
+                <!-- Step 1: Category Selection -->
+                <div id="step-1" class="card">
+                    <div class="mb-6">
+                        <h2 class="text-2xl font-bold text-text-primary mb-2">What type of issue are you reporting?</h2>
+                        <p class="text-text-secondary">Select the category that best describes your complaint. This helps us route it to the right department.</p>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="category-option border-2 border-border rounded-lg p-4 cursor-pointer hover:border-primary transition-colors" data-category="road-infrastructure">
+                            <div class="flex items-center mb-3">
+                                <div class="bg-accent-50 p-3 rounded-lg mr-4">
+                                    <svg class="w-6 h-6 text-accent" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-text-primary">Road & Infrastructure</h3>
+                                    <p class="text-sm text-text-secondary">Potholes, damaged roads, bridges, sidewalks</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="category-option border-2 border-border rounded-lg p-4 cursor-pointer hover:border-primary transition-colors" data-category="public-safety">
+                            <div class="flex items-center mb-3">
+                                <div class="bg-warning-50 p-3 rounded-lg mr-4">
+                                    <svg class="w-6 h-6 text-warning" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.464 0L4.35 16.5c-.77.833.192 2.5 1.732 2.5z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-text-primary">Public Safety</h3>
+                                    <p class="text-sm text-text-secondary">Traffic signals, dangerous conditions, security</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="category-option border-2 border-border rounded-lg p-4 cursor-pointer hover:border-primary transition-colors" data-category="waste-management">
+                            <div class="flex items-center mb-3">
+                                <div class="bg-secondary-50 p-3 rounded-lg mr-4">
+                                    <svg class="w-6 h-6 text-secondary" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-text-primary">Waste Management</h3>
+                                    <p class="text-sm text-text-secondary">Missed collections, illegal dumping, recycling</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="category-option border-2 border-border rounded-lg p-4 cursor-pointer hover:border-primary transition-colors" data-category="water-utilities">
+                            <div class="flex items-center mb-3">
+                                <div class="bg-primary-50 p-3 rounded-lg mr-4">
+                                    <svg class="w-6 h-6 text-primary" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-text-primary">Water & Utilities</h3>
+                                    <p class="text-sm text-text-secondary">Water leaks, power outages, gas issues</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="category-option border-2 border-border rounded-lg p-4 cursor-pointer hover:border-primary transition-colors" data-category="parks-recreation">
+                            <div class="flex items-center mb-3">
+                                <div class="bg-secondary-50 p-3 rounded-lg mr-4">
+                                    <svg class="w-6 h-6 text-secondary" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-text-primary">Parks & Recreation</h3>
+                                    <p class="text-sm text-text-secondary">Playground equipment, park maintenance, facilities</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="category-option border-2 border-border rounded-lg p-4 cursor-pointer hover:border-primary transition-colors" data-category="housing-zoning">
+                            <div class="flex items-center mb-3">
+                                <div class="bg-accent-50 p-3 rounded-lg mr-4">
+                                    <svg class="w-6 h-6 text-accent" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-text-primary">Housing & Zoning</h3>
+                                    <p class="text-sm text-text-secondary">Building violations, noise complaints, permits</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8 flex justify-end">
+                        <button type="button" id="next-step-1" class="btn-primary" disabled>
+                            Continue to Details
+                            <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 2: Details -->
+                <div id="step-2" class="card hidden">
+                    <div class="mb-6">
+                        <h2 class="text-2xl font-bold text-text-primary mb-2">Tell us about the issue</h2>
+                        <p class="text-text-secondary">Provide detailed information to help us understand and address your complaint effectively.</p>
+                    </div>
+                    
+                    <div class="space-y-6">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-semibold text-text-primary mb-2">Priority Level *</label>
+                                <select id="priority-level" class="input-field" required>
+                                    <option value>Select priority level</option>
+                                    <option value="low">Low - General Concern</option>
+                                    <option value="medium">Medium - Needs Attention</option>
+                                    <option value="high">High - Safety Issue</option>
+                                    <option value="critical">Critical - Emergency</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-semibold text-text-primary mb-2">Affected Area</label>
+                                <select id="affected-area" class="input-field">
+                                    <option value>Select area type</option>
+                                    <option value="residential">Residential Area</option>
+                                    <option value="commercial">Commercial District</option>
+                                    <option value="industrial">Industrial Zone</option>
+                                    <option value="public">Public Space</option>
+                                    <option value="transportation">Transportation Hub</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-semibold text-text-primary mb-2">Location *</label>
+                            <div class="relative">
+                                <input type="text" id="location-input" placeholder="Enter street address, intersection, or landmark" class="input-field pr-12" required />
+                                <button type="button" id="use-current-location" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-primary hover:text-primary-700">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <p class="text-xs text-text-secondary mt-1">Click the location icon to use your current location</p>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-semibold text-text-primary mb-2">Issue Title *</label>
+                            <input type="text" id="issue-title" placeholder="Brief, descriptive title for your complaint" class="input-field" required maxlength="100" />
+                            <p class="text-xs text-text-secondary mt-1">Keep it concise but descriptive (max 100 characters)</p>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-semibold text-text-primary mb-2">Detailed Description *</label>
+                            <textarea id="issue-description" rows="6" placeholder="Describe the issue in detail. Include when you first noticed it, how it affects you or the community, and any relevant background information..." class="input-field resize-none" required maxlength="2000"></textarea>
+                            <div class="flex justify-between text-xs text-text-secondary mt-1">
+                                <span>Be specific and factual. Avoid emotional language.</span>
+                                <span id="char-count">0/2000</span>
+                            </div>
+                        </div>
+                        
+                        <div id="category-specific-fields" class="space-y-4">
+                            <!-- Dynamic fields will be inserted here based on category -->
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8 flex justify-between">
+                        <button type="button" id="back-step-2" class="btn-outline">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                            </svg>
+                            Back to Category
+                        </button>
+                        <button type="button" id="next-step-2" class="btn-primary">
+                            Continue to Evidence
+                            <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 3: Evidence Upload -->
+                <div id="step-3" class="card hidden">
+                    <div class="mb-6">
+                        <h2 class="text-2xl font-bold text-text-primary mb-2">Add Supporting Evidence</h2>
+                        <p class="text-text-secondary">Photos and videos help us understand the issue better and speed up resolution. All uploads are secure and encrypted.</p>
+                    </div>
+                    
+                    <div class="space-y-6">
+                        <!-- File Upload Area -->
+                        <div class="border-2 border-dashed border-border-light rounded-lg p-8 text-center hover:border-primary transition-colors" id="upload-area">
+                            <div class="mb-4">
+                                <svg class="w-12 h-12 text-text-secondary mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                </svg>
+                                <h3 class="text-lg font-semibold text-text-primary mb-2">Upload Photos or Videos</h3>
+                                <p class="text-text-secondary mb-4">Drag and drop files here, or click to browse</p>
+                                <div class="flex flex-col sm:flex-row gap-3 justify-center">
+                                    <button type="button" id="browse-files" class="btn-outline">
+                                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+                                        </svg>
+                                        Browse Files
+                                    </button>
+                                    <button type="button" id="take-photo" class="btn-outline">
+                                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                        </svg>
+                                        Take Photo
+                                    </button>
+                                </div>
+                            </div>
+                            <input type="file" id="file-input" multiple accept="image/*,video/*" class="hidden" />
+                        </div>
+                        
+                        <!-- File Preview Area -->
+                        <div id="file-preview" class="hidden">
+                            <h4 class="font-semibold text-text-primary mb-4">Uploaded Files</h4>
+                            <div id="file-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                                <!-- File previews will be inserted here -->
+                            </div>
+                        </div>
+                        
+                        <!-- Upload Guidelines -->
+                        <div class="bg-primary-50 rounded-lg p-4">
+                            <h4 class="font-semibold text-primary mb-2">Evidence Guidelines</h4>
+                            <ul class="text-sm text-primary-800 space-y-1">
+                                <li>• Maximum file size: 10MB per file</li>
+                                <li>• Supported formats: JPG, PNG, MP4, MOV</li>
+                                <li>• Take clear, well-lit photos showing the issue</li>
+                                <li>• Include multiple angles if helpful</li>
+                                <li>• Videos should be under 2 minutes</li>
+                                <li>• All uploads are automatically compressed and secured</li>
+                            </ul>
+                        </div>
+                        
+                        <!-- Additional Information -->
+                        <div>
+                            <label class="block text-sm font-semibold text-text-primary mb-2">Additional Context (Optional)</label>
+                            <textarea id="evidence-context" rows="3" placeholder="Provide any additional context about the photos/videos you've uploaded..." class="input-field resize-none" maxlength="500"></textarea>
+                            <p class="text-xs text-text-secondary mt-1">Help us understand what we're looking at in your evidence</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8 flex justify-between">
+                        <button type="button" id="back-step-3" class="btn-outline">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                            </svg>
+                            Back to Details
+                        </button>
+                        <button type="button" id="next-step-3" class="btn-primary">
+                            Review Complaint
+                            <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 4: Review & Submit -->
+                <div id="step-4" class="card hidden">
+                    <div class="mb-6">
+                        <h2 class="text-2xl font-bold text-text-primary mb-2">Review Your Complaint</h2>
+                        <p class="text-text-secondary">Please review all information before submitting. You'll receive a confirmation email and tracking number.</p>
+                    </div>
+                    
+                    <div class="space-y-6">
+                        <!-- Review Summary -->
+                        <div class="bg-background rounded-lg p-6">
+                            <div class="grid md:grid-cols-2 gap-6">
+                                <div>
+                                    <h4 class="font-semibold text-text-primary mb-2">Category</h4>
+                                    <p id="review-category" class="text-text-secondary mb-4">-</p>
+                                    
+                                    <h4 class="font-semibold text-text-primary mb-2">Priority Level</h4>
+                                    <p id="review-priority" class="text-text-secondary mb-4">-</p>
+                                    
+                                    <h4 class="font-semibold text-text-primary mb-2">Location</h4>
+                                    <p id="review-location" class="text-text-secondary">-</p>
+                                </div>
+                                
+                                <div>
+                                    <h4 class="font-semibold text-text-primary mb-2">Issue Title</h4>
+                                    <p id="review-title" class="text-text-secondary mb-4">-</p>
+                                    
+                                    <h4 class="font-semibold text-text-primary mb-2">Uploaded Files</h4>
+                                    <p id="review-files" class="text-text-secondary">-</p>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-6">
+                                <h4 class="font-semibold text-text-primary mb-2">Description</h4>
+                                <p id="review-description" class="text-text-secondary">-</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Contact Information -->
+                        <div>
+                            <h3 class="text-lg font-semibold text-text-primary mb-4">Contact Information (Optional)</h3>
+                            <p class="text-text-secondary mb-4">Providing contact information helps us follow up if we need clarification. All information is kept confidential.</p>
+                            
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-semibold text-text-primary mb-2">Full Name</label>
+                                    <input type="text" id="contact-name" placeholder="Your full name" class="input-field" />
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-semibold text-text-primary mb-2">Email Address</label>
+                                    <input type="email" id="contact-email" placeholder="your.email@example.com" class="input-field" />
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-semibold text-text-primary mb-2">Phone Number</label>
+                                    <input type="tel" id="contact-phone" placeholder="(555) 123-4567" class="input-field" />
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-semibold text-text-primary mb-2">Preferred Contact Method</label>
+                                    <select id="contact-method" class="input-field">
+                                        <option value="email">Email</option>
+                                        <option value="phone">Phone</option>
+                                        <option value="both">Either</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Privacy & Terms -->
+                        <div class="bg-border-light rounded-lg p-4">
+                            <div class="flex items-start">
+                                <input type="checkbox" id="privacy-agreement" class="mt-1 mr-3" required />
+                                <label for="privacy-agreement" class="text-sm text-text-secondary">
+                                    I understand that this complaint will be shared with relevant government agencies for resolution. 
+                                    I agree to the <a href="javascript:void(0)" class="text-primary hover:underline">Privacy Policy</a> and 
+                                    <a href="javascript:void(0)" class="text-primary hover:underline">Terms of Service</a>.
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8 flex justify-between">
+                        <button type="button" id="back-step-4" class="btn-outline">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                            </svg>
+                            Back to Evidence
+                        </button>
+                        <button type="submit" id="submit-complaint" class="btn-primary">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+                            </svg>
+                            Submit Complaint
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Auto-save Indicator -->
+    <div id="autosave-indicator" class="fixed bottom-4 right-4 bg-surface shadow-card rounded-lg px-4 py-2 hidden">
+        <div class="flex items-center text-sm">
+            <svg class="w-4 h-4 text-secondary mr-2 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+            </svg>
+            <span class="text-text-secondary">Auto-saving...</span>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="success-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-surface rounded-2xl p-8 max-w-md mx-4 text-center">
+            <div class="bg-secondary-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8 text-secondary" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+            </div>
+            <h3 class="text-xl font-bold text-text-primary mb-2">Complaint Submitted Successfully!</h3>
+            <p class="text-text-secondary mb-4">Your complaint has been received and assigned tracking number:</p>
+            <div class="bg-background rounded-lg p-3 mb-6">
+                <span class="font-mono text-lg font-bold text-primary" id="tracking-number">CV-2025-001234</span>
+            </div>
+            <p class="text-sm text-text-secondary mb-6">You'll receive email updates as your complaint progresses. Expected response time: 2-5 business days.</p>
+            <div class="flex flex-col sm:flex-row gap-3">
+                <a href="track_progress.html" class="btn-primary flex-1">Track Progress</a>
+                <a href="homepage.html" class="btn-outline flex-1">Return Home</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-text-primary text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <svg class="h-8 w-8 text-primary mr-3" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2L13.09 8.26L20 9L13.09 9.74L12 16L10.91 9.74L4 9L10.91 8.26L12 2Z"/>
+                            <circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                        <span class="text-xl font-bold">CitizenVoice</span>
+                    </div>
+                    <p class="text-gray-400 mb-4">
+                        Empowering citizens to create positive change in their communities through transparency and accountability.
+                    </p>
+                </div>
+                
+                <div>
+                    <h3 class="font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="submit_complaint.html" class="hover:text-white transition-colors">Submit Complaint</a></li>
+                        <li><a href="track_progress.html" class="hover:text-white transition-colors">Track Progress</a></li>
+                        <li><a href="public_transparency_hub.html" class="hover:text-white transition-colors">Public Hub</a></li>
+                        <li><a href="community_forum.html" class="hover:text-white transition-colors">Community Forum</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="font-semibold mb-4">Resources</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="javascript:void(0)" class="hover:text-white transition-colors">Citizen Rights Guide</a></li>
+                        <li><a href="javascript:void(0)" class="hover:text-white transition-colors">Filing Best Practices</a></li>
+                        <li><a href="javascript:void(0)" class="hover:text-white transition-colors">Legal Resources</a></li>
+                        <li><a href="javascript:void(0)" class="hover:text-white transition-colors">Help Center</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="font-semibold mb-4">Contact</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li>ibrahimgoba085@gmail.org</li>
+                        <li>+23277739013-CITIZEN</li>
+                        <li>24/7 Live Chat</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 CitizenVoice. All Rights Reserved. | Privacy Policy | Terms of Service</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Form state management
+        let currentStep = 1;
+        let formData = {
+            category: '',
+            priority: '',
+            location: '',
+            title: '',
+            description: '',
+            files: [],
+            contact: {}
+        };
+
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Step navigation functions
+        function showStep(step) {
+            // Hide all steps
+            for (let i = 1; i <= 4; i++) {
+                document.getElementById(`step-${i}`).classList.add('hidden');
+                document.getElementById(`step-${i}-indicator`).classList.remove('bg-primary', 'text-white');
+                document.getElementById(`step-${i}-indicator`).classList.add('bg-border', 'text-text-secondary');
+                document.getElementById(`step-${i}-indicator`).parentElement.querySelector('span').classList.remove('text-primary');
+                document.getElementById(`step-${i}-indicator`).parentElement.querySelector('span').classList.add('text-text-secondary');
+            }
+            
+            // Show current step
+            document.getElementById(`step-${step}`).classList.remove('hidden');
+            document.getElementById(`step-${step}-indicator`).classList.add('bg-primary', 'text-white');
+            document.getElementById(`step-${step}-indicator`).classList.remove('bg-border', 'text-text-secondary');
+            document.getElementById(`step-${step}-indicator`).parentElement.querySelector('span').classList.add('text-primary');
+            document.getElementById(`step-${step}-indicator`).parentElement.querySelector('span').classList.remove('text-text-secondary');
+            
+            // Update progress text
+            document.getElementById('progress-text').textContent = `Step ${step} of 4`;
+            currentStep = step;
+        }
+
+        // Category selection
+        document.querySelectorAll('.category-option').forEach(option => {
+            option.addEventListener('click', function() {
+                // Remove selection from all options
+                document.querySelectorAll('.category-option').forEach(opt => {
+                    opt.classList.remove('border-primary', 'bg-primary-50');
+                    opt.classList.add('border-border');
+                });
+                
+                // Add selection to clicked option
+                this.classList.add('border-primary', 'bg-primary-50');
+                this.classList.remove('border-border');
+                
+                // Store category
+                formData.category = this.dataset.category;
+                
+                // Enable next button
+                document.getElementById('next-step-1').disabled = false;
+                document.getElementById('next-step-1').classList.remove('opacity-50', 'cursor-not-allowed');
+            });
+        });
+
+        // Step 1 navigation
+        document.getElementById('next-step-1').addEventListener('click', function() {
+            if (formData.category) {
+                showStep(2);
+                loadCategorySpecificFields();
+            }
+        });
+
+        // Step 2 navigation
+        document.getElementById('back-step-2').addEventListener('click', () => showStep(1));
+        document.getElementById('next-step-2').addEventListener('click', function() {
+            if (validateStep2()) {
+                showStep(3);
+            }
+        });
+
+        // Step 3 navigation
+        document.getElementById('back-step-3').addEventListener('click', () => showStep(2));
+        document.getElementById('next-step-3').addEventListener('click', function() {
+            showStep(4);
+            populateReview();
+        });
+
+        // Step 4 navigation
+        document.getElementById('back-step-4').addEventListener('click', () => showStep(3));
+
+        // Character counter for description
+        document.getElementById('issue-description').addEventListener('input', function() {
+            const count = this.value.length;
+            document.getElementById('char-count').textContent = `${count}/2000`;
+        });
+
+        // Current location functionality
+        document.getElementById('use-current-location').addEventListener('click', function() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    // In a real app, you'd reverse geocode these coordinates
+                    const lat = position.coords.latitude;
+                    const lng = position.coords.longitude;
+                    document.getElementById('location-input').value = `Current Location (${lat.toFixed(6)}, ${lng.toFixed(6)})`;
+                }, function(error) {
+                    alert('Unable to get your location. Please enter the address manually.');
+                });
+            } else {
+                alert('Geolocation is not supported by this browser.');
+            }
+        });
+
+        // File upload functionality
+        const fileInput = document.getElementById('file-input');
+        const uploadArea = document.getElementById('upload-area');
+        const filePreview = document.getElementById('file-preview');
+        const fileList = document.getElementById('file-list');
+
+        document.getElementById('browse-files').addEventListener('click', () => fileInput.click());
+        document.getElementById('take-photo').addEventListener('click', function() {
+            // In a real app, this would open camera
+            fileInput.setAttribute('capture', 'camera');
+            fileInput.click();
+        });
+
+        // Drag and drop functionality
+        uploadArea.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            this.classList.add('border-primary', 'bg-primary-50');
+        });
+
+        uploadArea.addEventListener('dragleave', function(e) {
+            e.preventDefault();
+            this.classList.remove('border-primary', 'bg-primary-50');
+        });
+
+        uploadArea.addEventListener('drop', function(e) {
+            e.preventDefault();
+            this.classList.remove('border-primary', 'bg-primary-50');
+            const files = Array.from(e.dataTransfer.files);
+            handleFiles(files);
+        });
+
+        fileInput.addEventListener('change', function() {
+            const files = Array.from(this.files);
+            handleFiles(files);
+        });
+
+        function handleFiles(files) {
+            files.forEach(file => {
+                if (file.size > 10 * 1024 * 1024) { // 10MB limit
+                    alert(`File ${file.name} is too large. Maximum size is 10MB.`);
+                    return;
+                }
+                
+                formData.files.push(file);
+                addFilePreview(file);
+            });
+            
+            if (formData.files.length > 0) {
+                filePreview.classList.remove('hidden');
+            }
+        }
+
+        function addFilePreview(file) {
+            const fileItem = document.createElement('div');
+            fileItem.className = 'bg-surface border border-border rounded-lg p-4 relative';
+            
+            const isImage = file.type.startsWith('image/');
+            const isVideo = file.type.startsWith('video/');
+            
+            fileItem.innerHTML = `
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-sm font-medium text-text-primary truncate">${file.name}</span>
+                    <button type="button" class="text-accent hover:text-accent-700 ml-2" onclick="removeFile('${file.name}')">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="text-xs text-text-secondary mb-2">${(file.size / 1024 / 1024).toFixed(2)} MB</div>
+                ${isImage ? `<div class="w-full h-24 bg-border-light rounded flex items-center justify-center">
+                    <svg class="w-8 h-8 text-text-secondary" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                    </svg>
+                </div>` : ''}
+                ${isVideo ? `<div class="w-full h-24 bg-border-light rounded flex items-center justify-center">
+                    <svg class="w-8 h-8 text-text-secondary" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                    </svg>
+                </div>` : ''}
+            `;
+            
+            fileList.appendChild(fileItem);
+        }
+
+        function removeFile(fileName) {
+            formData.files = formData.files.filter(file => file.name !== fileName);
+            // Remove from DOM
+            const fileItems = fileList.children;
+            for (let item of fileItems) {
+                if (item.querySelector('span').textContent === fileName) {
+                    item.remove();
+                    break;
+                }
+            }
+            
+            if (formData.files.length === 0) {
+                filePreview.classList.add('hidden');
+            }
+        }
+
+        // Load category-specific fields
+        function loadCategorySpecificFields() {
+            const container = document.getElementById('category-specific-fields');
+            container.innerHTML = '';
+            
+            const categoryFields = {
+                'road-infrastructure': `
+                    <div>
+                        <label class="block text-sm font-semibold text-text-primary mb-2">Road Condition</label>
+                        <select class="input-field">
+                            <option value="">Select condition</option>
+                            <option value="pothole">Pothole</option>
+                            <option value="crack">Crack/Damage</option>
+                            <option value="flooding">Flooding</option>
+                            <option value="debris">Debris/Obstruction</option>
+                        </select>
+                    </div>
+                `,
+                'public-safety': `
+                    <div>
+                        <label class="block text-sm font-semibold text-text-primary mb-2">Safety Concern Type</label>
+                        <select class="input-field">
+                            <option value="">Select type</option>
+                            <option value="lighting">Poor Lighting</option>
+                            <option value="traffic">Traffic Signal Issue</option>
+                            <option value="hazard">Physical Hazard</option>
+                            <option value="crime">Crime/Security</option>
+                        </select>
+                    </div>
+                `,
+                'waste-management': `
+                    <div>
+                        <label class="block text-sm font-semibold text-text-primary mb-2">Waste Issue Type</label>
+                        <select class="input-field">
+                            <option value="">Select type</option>
+                            <option value="missed-collection">Missed Collection</option>
+                            <option value="illegal-dumping">Illegal Dumping</option>
+                            <option value="overflowing">Overflowing Bins</option>
+                            <option value="recycling">Recycling Issue</option>
+                        </select>
+                    </div>
+                `
+            };
+            
+            if (categoryFields[formData.category]) {
+                container.innerHTML = categoryFields[formData.category];
+            }
+        }
+
+        // Validate step 2
+        function validateStep2() {
+            const priority = document.getElementById('priority-level').value;
+            const location = document.getElementById('location-input').value;
+            const title = document.getElementById('issue-title').value;
+            const description = document.getElementById('issue-description').value;
+            
+            if (!priority || !location || !title || !description) {
+                alert('Please fill in all required fields.');
+                return false;
+            }
+            
+            // Store form data
+            formData.priority = priority;
+            formData.location = location;
+            formData.title = title;
+            formData.description = description;
+            
+            return true;
+        }
+
+        // Populate review section
+        function populateReview() {
+            const categoryNames = {
+                'road-infrastructure': 'Road & Infrastructure',
+                'public-safety': 'Public Safety',
+                'waste-management': 'Waste Management',
+                'water-utilities': 'Water & Utilities',
+                'parks-recreation': 'Parks & Recreation',
+                'housing-zoning': 'Housing & Zoning'
+            };
+            
+            const priorityNames = {
+                'low': 'Low - General Concern',
+                'medium': 'Medium - Needs Attention',
+                'high': 'High - Safety Issue',
+                'critical': 'Critical - Emergency'
+            };
+            
+            document.getElementById('review-category').textContent = categoryNames[formData.category] || formData.category;
+            document.getElementById('review-priority').textContent = priorityNames[formData.priority] || formData.priority;
+            document.getElementById('review-location').textContent = formData.location;
+            document.getElementById('review-title').textContent = formData.title;
+            document.getElementById('review-description').textContent = formData.description;
+            document.getElementById('review-files').textContent = formData.files.length > 0 ? 
+                `${formData.files.length} file(s) uploaded` : 'No files uploaded';
+        }
+
+        // Form submission
+        document.getElementById('complaint-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const privacyAgreed = document.getElementById('privacy-agreement').checked;
+            if (!privacyAgreed) {
+                alert('Please agree to the privacy policy and terms of service.');
+                return;
+            }
+            
+            // Collect contact information
+            formData.contact = {
+                name: document.getElementById('contact-name').value,
+                email: document.getElementById('contact-email').value,
+                phone: document.getElementById('contact-phone').value,
+                method: document.getElementById('contact-method').value
+            };
+            
+            // Generate tracking number
+            const trackingNumber = 'CV-2025-' + Math.floor(Math.random() * 900000 + 100000);
+            document.getElementById('tracking-number').textContent = trackingNumber;
+            
+            // Show success modal
+            document.getElementById('success-modal').classList.remove('hidden');
+            
+            // In a real app, you would submit the form data to the server here
+            console.log('Form submitted:', formData);
+        });
+
+        // Auto-save functionality
+        let autoSaveTimeout;
+        function autoSave() {
+            clearTimeout(autoSaveTimeout);
+            autoSaveTimeout = setTimeout(() => {
+                const indicator = document.getElementById('autosave-indicator');
+                indicator.classList.remove('hidden');
+                
+                // Simulate auto-save
+                setTimeout(() => {
+                    indicator.classList.add('hidden');
+                }, 2000);
+                
+                // In a real app, save to localStorage or server
+                localStorage.setItem('complaint-draft', JSON.stringify(formData));
+            }, 1000);
+        }
+
+        // Add auto-save to form inputs
+        document.querySelectorAll('input, textarea, select').forEach(input => {
+            input.addEventListener('input', autoSave);
+        });
+
+        // Load draft on page load
+        window.addEventListener('load', function() {
+            const draft = localStorage.getItem('complaint-draft');
+            if (draft) {
+                try {
+                    const savedData = JSON.parse(draft);
+                    // Restore form data if needed
+                    console.log('Draft loaded:', savedData);
+                } catch (e) {
+                    console.error('Error loading draft:', e);
+                }
+            }
+        });
+
+        // Initialize form
+        showStep(1);
+    </script>
+<script id="dhws-dataInjector" src="../public/dhws-data-injector.js"></script>
+</body>
+</html>

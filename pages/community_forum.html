@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Community Forum - CitizenVoice</title>
+    <link rel="stylesheet" href="../css/main.css" />
+    <meta name="description" content="Join the CitizenVoice community forum to discuss local issues, collaborate on solutions, and engage with fellow citizens for positive change." />
+  <script type="module" defer src="https://static.rocket.new/rocket-shot.js?v=0.0.1"></script>
+  
+  <script type="module" async src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Fcitizenvoi3231back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.12"></script>
+  <script type="module" defer src="https://static.rocket.new/rocket-shot.js?v=0.0.2"></script>
+  </head>
+<body class="bg-background">
+    <!-- Navigation Header -->
+    <nav class="bg-surface shadow-card sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <svg class="h-8 w-8 text-primary mr-3" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2L13.09 8.26L20 9L13.09 9.74L12 16L10.91 9.74L4 9L10.91 8.26L12 2Z"/>
+                        <circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    <span class="text-xl font-bold text-primary">CitizenVoice</span>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="homepage.html" class="text-text-secondary hover:text-primary transition-colors">Home</a>
+                    <a href="submit_complaint.html" class="text-text-secondary hover:text-primary transition-colors">Submit Complaint</a>
+                    <a href="track_progress.html" class="text-text-secondary hover:text-primary transition-colors">Track Progress</a>
+                    <a href="public_transparency_hub.html" class="text-text-secondary hover:text-primary transition-colors">Public Hub</a>
+                    <a href="community_forum.html" class="text-primary font-semibold">Community</a>
+                    <a href="login.html" class="btn-outline text-sm py-2 px-4">Agency Login</a>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-text-secondary hover:text-primary">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-surface border-t border-border">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="homepage.html" class="block px-3 py-2 text-text-secondary hover:text-primary">Home</a>
+                <a href="submit_complaint.html" class="block px-3 py-2 text-text-secondary hover:text-primary">Submit Complaint</a>
+                <a href="track_progress.html" class="block px-3 py-2 text-text-secondary hover:text-primary">Track Progress</a>
+                <a href="public_transparency_hub.html" class="block px-3 py-2 text-text-secondary hover:text-primary">Public Hub</a>
+                <a href="community_forum.html" class="block px-3 py-2 text-primary font-semibold">Community</a>
+                <a href="login.html" class="block px-3 py-2 text-primary font-semibold">Agency Login</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative bg-gradient-to-br from-secondary-50 to-primary-50 py-16 overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <svg class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <polygon fill="currentColor" points="0,0 100,0 80,100 0,100"/>
+            </svg>
+        </div>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h1 class="text-4xl md:text-5xl font-bold text-text-primary mb-6">
+                    Community <span class="text-secondary">Forum</span>
+                </h1>
+                <p class="text-lg md:text-xl text-text-secondary mb-8 max-w-3xl mx-auto">
+                    Connect with fellow citizens, discuss local issues, and collaborate on solutions that make our communities better. 
+                    Your voice combined with others creates powerful change.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button class="btn-secondary" onclick="showNewTopicModal()">
+                        Start New Discussion
+                    </button>
+                    <a href="submit_complaint.html" class="btn-outline text-center">
+                        Report an Issue
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Forum Statistics -->
+    <section class="py-12 bg-surface">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-primary mb-2">2,847</div>
+                    <div class="text-text-secondary">Active Members</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-secondary mb-2">1,293</div>
+                    <div class="text-text-secondary">Discussions</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-accent mb-2">8,456</div>
+                    <div class="text-text-secondary">Comments</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-warning mb-2">342</div>
+                    <div class="text-text-secondary">Solutions Implemented</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Forum Categories & Content -->
+    <section class="py-16 bg-background">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-4 gap-8">
+                <!-- Sidebar -->
+                <div class="lg:col-span-1">
+                    <div class="card mb-6">
+                        <h3 class="text-lg font-semibold text-text-primary mb-4">Forum Categories</h3>
+                        <ul class="space-y-3">
+                            <li>
+                                <button class="w-full text-left px-3 py-2 rounded-lg bg-primary-50 text-primary font-semibold" onclick="filterCategory('all')">
+                                    <svg class="w-4 h-4 inline mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 2l3.09 6.26L22 9l-6.91 1.01L12 16l-3.09-5.99L2 9l6.91-1.01L12 2z"/>
+                                    </svg>
+                                    All Discussions
+                                </button>
+                            </li>
+                            <li>
+                                <button class="w-full text-left px-3 py-2 rounded-lg text-text-secondary hover:bg-primary-50 hover:text-primary transition-colors" onclick="filterCategory('infrastructure')">
+                                    <svg class="w-4 h-4 inline mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                                    </svg>
+                                    Infrastructure
+                                </button>
+                            </li>
+                            <li>
+                                <button class="w-full text-left px-3 py-2 rounded-lg text-text-secondary hover:bg-primary-50 hover:text-primary transition-colors" onclick="filterCategory('safety')">
+                                    <svg class="w-4 h-4 inline mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                                    </svg>
+                                    Public Safety
+                                </button>
+                            </li>
+                            <li>
+                                <button class="w-full text-left px-3 py-2 rounded-lg text-text-secondary hover:bg-primary-50 hover:text-primary transition-colors" onclick="filterCategory('environment')">
+                                    <svg class="w-4 h-4 inline mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                                    </svg>
+                                    Environment
+                                </button>
+                            </li>
+                            <li>
+                                <button class="w-full text-left px-3 py-2 rounded-lg text-text-secondary hover:bg-primary-50 hover:text-primary transition-colors" onclick="filterCategory('community')">
+                                    <svg class="w-4 h-4 inline mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20a3 3 0 01-3-3v-2a3 3 0 013-3h4a3 3 0 013 3v2a3 3 0 01-3 3z"/>
+                                    </svg>
+                                    Community Events
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Top Contributors -->
+                    <div class="card">
+                        <h3 class="text-lg font-semibold text-text-primary mb-4">Top Contributors</h3>
+                        <div class="space-y-3">
+                            <div class="flex items-center">
+                                <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3" alt="Sarah Chen" class="w-8 h-8 rounded-full object-cover mr-3" loading="lazy" onerror="this.src='https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'; this.onerror=null;" />
+                                <div class="flex-1">
+                                    <div class="text-sm font-semibold text-text-primary">Sarah Chen</div>
+                                    <div class="text-xs text-text-secondary">Community Leader</div>
+                                </div>
+                                <div class="bg-secondary-50 text-secondary-800 px-2 py-1 rounded-full text-xs font-medium">
+                                    847 pts
+                                </div>
+                            </div>
+                            <div class="flex items-center">
+                                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3" alt="Mike Rodriguez" class="w-8 h-8 rounded-full object-cover mr-3" loading="lazy" onerror="this.src='https://images.pixabay.com/photo/2016/11/29/09/38/adult-1868750_1280.jpg'; this.onerror=null;" />
+                                <div class="flex-1">
+                                    <div class="text-sm font-semibold text-text-primary">Mike Rodriguez</div>
+                                    <div class="text-xs text-text-secondary">Active Citizen</div>
+                                </div>
+                                <div class="bg-primary-50 text-primary-800 px-2 py-1 rounded-full text-xs font-medium">
+                                    623 pts
+                                </div>
+                            </div>
+                            <div class="flex items-center">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3" alt="John Doe" class="w-8 h-8 rounded-full object-cover mr-3" loading="lazy" onerror="this.src='https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'; this.onerror=null;" />
+                                <div class="flex-1">
+                                    <div class="text-sm font-semibold text-text-primary">John Doe</div>
+                                    <div class="text-xs text-text-secondary">Regular Contributor</div>
+                                </div>
+                                <div class="bg-accent-50 text-accent-800 px-2 py-1 rounded-full text-xs font-medium">
+                                    456 pts
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Content -->
+                <div class="lg:col-span-3">
+                    <!-- Search and Filter Bar -->
+                    <div class="card mb-6">
+                        <div class="flex flex-col md:flex-row gap-4">
+                            <div class="flex-1">
+                                <div class="relative">
+                                    <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                                    </svg>
+                                    <input type="text" placeholder="Search discussions..." class="input-field pl-10" />
+                                </div>
+                            </div>
+                            <div class="flex gap-2">
+                                <select class="input-field">
+                                    <option>Sort by Latest</option>
+                                    <option>Most Popular</option>
+                                    <option>Most Replies</option>
+                                    <option>Oldest First</option>
+                                </select>
+                                <button class="btn-outline px-4" onclick="resetFilters()">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Discussion Threads -->
+                    <div class="space-y-6" id="discussion-threads">
+                        <!-- Featured Discussion -->
+                        <div class="card border-l-4 border-l-secondary">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="flex items-center">
+                                    <span class="bg-secondary-50 text-secondary-800 px-3 py-1 rounded-full text-sm font-medium mr-3">Featured</span>
+                                    <span class="bg-primary-50 text-primary-800 px-3 py-1 rounded-full text-sm font-medium">Infrastructure</span>
+                                </div>
+                                <div class="flex items-center text-sm text-text-secondary">
+                                    <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    2 hours ago
+                                </div>
+                            </div>
+                            <h3 class="text-xl font-semibold text-text-primary mb-3 hover:text-primary cursor-pointer" onclick="openDiscussion('main-street-pothole')">
+                                Community Solution for Main Street Pothole Crisis
+                            </h3>
+                            <p class="text-text-secondary mb-4">
+                                After multiple reports about the dangerous potholes on Main Street, let's collaborate on a comprehensive solution. 
+                                I've researched similar issues in other cities and found some innovative approaches we could propose to the city council.
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-4">
+                                    <div class="flex items-center">
+                                        <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3" alt="Sarah Chen" class="w-6 h-6 rounded-full object-cover mr-2" loading="lazy" onerror="this.src='https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'; this.onerror=null;" />
+                                        <span class="text-sm font-medium text-text-primary">Sarah Chen</span>
+                                    </div>
+                                    <div class="flex items-center text-sm text-text-secondary">
+                                        <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                                        </svg>
+                                        23 replies
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <button class="flex items-center text-sm text-text-secondary hover:text-secondary transition-colors" onclick="voteUp('main-street-pothole')">
+                                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/>
+                                        </svg>
+                                        <span id="votes-main-street-pothole">47</span>
+                                    </button>
+                                    <button class="text-text-secondary hover:text-primary transition-colors" onclick="shareDiscussion('main-street-pothole')">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Regular Discussions -->
+                        <div class="card">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="flex items-center">
+                                    <span class="bg-accent-50 text-accent-800 px-3 py-1 rounded-full text-sm font-medium mr-3">Public Safety</span>
+                                </div>
+                                <div class="flex items-center text-sm text-text-secondary">
+                                    <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    5 hours ago
+                                </div>
+                            </div>
+                            <h3 class="text-xl font-semibold text-text-primary mb-3 hover:text-primary cursor-pointer" onclick="openDiscussion('streetlight-safety')">
+                                Organizing Neighborhood Watch for Oak Avenue
+                            </h3>
+                            <p class="text-text-secondary mb-4">
+                                With the recent streetlight outages on Oak Avenue, several neighbors have expressed interest in starting a neighborhood watch program. 
+                                Let's discuss how we can coordinate with local police and create a safer environment for everyone.
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-4">
+                                    <div class="flex items-center">
+                                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3" alt="Mike Rodriguez" class="w-6 h-6 rounded-full object-cover mr-2" loading="lazy" onerror="this.src='https://images.pixabay.com/photo/2016/11/29/09/38/adult-1868750_1280.jpg'; this.onerror=null;" />
+                                        <span class="text-sm font-medium text-text-primary">Mike Rodriguez</span>
+                                    </div>
+                                    <div class="flex items-center text-sm text-text-secondary">
+                                        <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                                        </svg>
+                                        15 replies
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <button class="flex items-center text-sm text-text-secondary hover:text-secondary transition-colors" onclick="voteUp('streetlight-safety')">
+                                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/>
+                                        </svg>
+                                        <span id="votes-streetlight-safety">32</span>
+                                    </button>
+                                    <button class="text-text-secondary hover:text-primary transition-colors" onclick="shareDiscussion('streetlight-safety')">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="flex items-center">
+                                    <span class="bg-secondary-50 text-secondary-800 px-3 py-1 rounded-full text-sm font-medium mr-3">Environment</span>
+                                </div>
+                                <div class="flex items-center text-sm text-text-secondary">
+                                    <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    1 day ago
+                                </div>
+                            </div>
+                            <h3 class="text-xl font-semibold text-text-primary mb-3 hover:text-primary cursor-pointer" onclick="openDiscussion('park-renovation')">
+                                Central Park Renovation: Community Input Needed
+                            </h3>
+                            <p class="text-text-secondary mb-4">
+                                The city has approved budget for Central Park renovation! They're asking for community input on what improvements we'd like to see. 
+                                Let's compile our suggestions and present them as a unified community voice.
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-4">
+                                    <div class="flex items-center">
+                                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3" alt="Emily Johnson" class="w-6 h-6 rounded-full object-cover mr-2" loading="lazy" onerror="this.src='https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'; this.onerror=null;" />
+                                        <span class="text-sm font-medium text-text-primary">Emily Johnson</span>
+                                    </div>
+                                    <div class="flex items-center text-sm text-text-secondary">
+                                        <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                                        </svg>
+                                        28 replies
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <button class="flex items-center text-sm text-text-secondary hover:text-secondary transition-colors" onclick="voteUp('park-renovation')">
+                                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/>
+                                        </svg>
+                                        <span id="votes-park-renovation">64</span>
+                                    </button>
+                                    <button class="text-text-secondary hover:text-primary transition-colors" onclick="shareDiscussion('park-renovation')">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="flex items-center">
+                                    <span class="bg-warning-50 text-warning-800 px-3 py-1 rounded-full text-sm font-medium mr-3">Community Events</span>
+                                </div>
+                                <div class="flex items-center text-sm text-text-secondary">
+                                    <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    3 days ago
+                                </div>
+                            </div>
+                            <h3 class="text-xl font-semibold text-text-primary mb-3 hover:text-primary cursor-pointer" onclick="openDiscussion('town-hall-prep')">
+                                Preparing for Next Month's Town Hall Meeting
+                            </h3>
+                            <p class="text-text-secondary mb-4">
+                                The mayor's office announced a town hall meeting for October 15th. This is our chance to present the issues we've been discussing here. 
+                                Let's coordinate our talking points and make sure our community's voice is heard loud and clear.
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-4">
+                                    <div class="flex items-center">
+                                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3" alt="John Doe" class="w-6 h-6 rounded-full object-cover mr-2" loading="lazy" onerror="this.src='https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'; this.onerror=null;" />
+                                        <span class="text-sm font-medium text-text-primary">John Doe</span>
+                                    </div>
+                                    <div class="flex items-center text-sm text-text-secondary">
+                                        <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                                        </svg>
+                                        19 replies
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <button class="flex items-center text-sm text-text-secondary hover:text-secondary transition-colors" onclick="voteUp('town-hall-prep')">
+                                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/>
+                                        </svg>
+                                        <span id="votes-town-hall-prep">38</span>
+                                    </button>
+                                    <button class="text-text-secondary hover:text-primary transition-colors" onclick="shareDiscussion('town-hall-prep')">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Load More Button -->
+                    <div class="text-center mt-8">
+                        <button class="btn-outline" onclick="loadMoreDiscussions()">
+                            Load More Discussions
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Community Guidelines -->
+    <section class="py-16 bg-surface">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-text-primary mb-4">Community Guidelines</h2>
+                <p class="text-lg text-text-secondary">
+                    Help us maintain a respectful and productive environment for all community members
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="card">
+                    <div class="bg-secondary-50 p-3 rounded-lg w-fit mb-4">
+                        <svg class="w-6 h-6 text-secondary" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-text-primary mb-3">Be Respectful</h3>
+                    <p class="text-text-secondary">
+                        Treat all community members with respect and courtesy. Disagreements are welcome, 
+                        but personal attacks and harassment are not tolerated.
+                    </p>
+                </div>
+                
+                <div class="card">
+                    <div class="bg-primary-50 p-3 rounded-lg w-fit mb-4">
+                        <svg class="w-6 h-6 text-primary" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M9 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-text-primary mb-3">Stay On Topic</h3>
+                    <p class="text-text-secondary">
+                        Keep discussions focused on community issues and solutions. Off-topic conversations 
+                        should be moved to appropriate channels or private messages.
+                    </p>
+                </div>
+                
+                <div class="card">
+                    <div class="bg-accent-50 p-3 rounded-lg w-fit mb-4">
+                        <svg class="w-6 h-6 text-accent" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-text-primary mb-3">Verify Information</h3>
+                    <p class="text-text-secondary">
+                        Share accurate information and cite sources when possible. If you're unsure about 
+                        something, ask questions rather than spreading unverified claims.
+                    </p>
+                </div>
+                
+                <div class="card">
+                    <div class="bg-warning-50 p-3 rounded-lg w-fit mb-4">
+                        <svg class="w-6 h-6 text-warning" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20a3 3 0 01-3-3v-2a3 3 0 013-3h4a3 3 0 013 3v2a3 3 0 01-3 3z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-text-primary mb-3">Collaborate Constructively</h3>
+                    <p class="text-text-secondary">
+                        Focus on finding solutions and building consensus. Criticism should be constructive 
+                        and aimed at improving our community, not tearing others down.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- New Topic Modal -->
+    <div id="new-topic-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-surface rounded-2xl p-8 max-w-2xl w-full max-h-screen overflow-y-auto">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-text-primary">Start New Discussion</h2>
+                    <button onclick="hideNewTopicModal()" class="text-text-secondary hover:text-text-primary">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+                
+                <form class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-semibold text-text-primary mb-2">Discussion Title</label>
+                        <input type="text" placeholder="What would you like to discuss?" class="input-field" />
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-semibold text-text-primary mb-2">Category</label>
+                        <select class="input-field">
+                            <option>Select a category</option>
+                            <option>Infrastructure</option>
+                            <option>Public Safety</option>
+                            <option>Environment</option>
+                            <option>Community Events</option>
+                            <option>General Discussion</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-semibold text-text-primary mb-2">Description</label>
+                        <textarea rows="6" placeholder="Provide details about the topic you'd like to discuss..." class="input-field resize-none"></textarea>
+                    </div>
+                    
+                    <div class="flex items-center">
+                        <input type="checkbox" id="notify-followers" class="mr-2" />
+                        <label for="notify-followers" class="text-sm text-text-secondary">Notify my followers about this discussion</label>
+                    </div>
+                    
+                    <div class="flex gap-4">
+                        <button type="button" onclick="hideNewTopicModal()" class="flex-1 btn-outline">Cancel</button>
+                        <button type="submit" class="flex-1 btn-secondary">Start Discussion</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-text-primary text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <svg class="h-8 w-8 text-primary mr-3" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2L13.09 8.26L20 9L13.09 9.74L12 16L10.91 9.74L4 9L10.91 8.26L12 2Z"/>
+                            <circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                        <span class="text-xl font-bold">CitizenVoice</span>
+                    </div>
+                    <p class="text-gray-400 mb-4">
+                        Empowering citizens to create positive change in their communities through transparency and accountability.
+                    </p>
+                </div>
+                
+                <div>
+                    <h3 class="font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="submit_complaint.html" class="hover:text-white transition-colors">Submit Complaint</a></li>
+                        <li><a href="track_progress.html" class="hover:text-white transition-colors">Track Progress</a></li>
+                        <li><a href="public_transparency_hub.html" class="hover:text-white transition-colors">Public Hub</a></li>
+                        <li><a href="community_forum.html" class="hover:text-white transition-colors">Community Forum</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="font-semibold mb-4">Resources</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="javascript:void(0)" class="hover:text-white transition-colors">Citizen Rights Guide</a></li>
+                        <li><a href="javascript:void(0)" class="hover:text-white transition-colors">Filing Best Practices</a></li>
+                        <li><a href="javascript:void(0)" class="hover:text-white transition-colors">Legal Resources</a></li>
+                        <li><a href="javascript:void(0)" class="hover:text-white transition-colors">Help Center</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="font-semibold mb-4">Contact</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li>support@citizenvoice.org</li>
+                        <li>1-800-CITIZEN</li>
+                        <li>24/7 Live Chat</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 CitizenVoice. All Rights Reserved. | Privacy Policy | Terms of Service</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // New Topic Modal Functions
+        function showNewTopicModal() {
+            document.getElementById('new-topic-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function hideNewTopicModal() {
+            document.getElementById('new-topic-modal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Filter Functions
+        function filterCategory(category) {
+            // Update active category button
+            const buttons = document.querySelectorAll('button[onclick^="filterCategory"]');
+            buttons.forEach(btn => {
+                btn.className = 'w-full text-left px-3 py-2 rounded-lg text-text-secondary hover:bg-primary-50 hover:text-primary transition-colors';
+            });
+            event.target.className = 'w-full text-left px-3 py-2 rounded-lg bg-primary-50 text-primary font-semibold';
+            
+            // Filter discussions (mock implementation)
+            console.log('Filtering by category:', category);
+        }
+
+        function resetFilters() {
+            // Reset all filters
+            console.log('Resetting filters');
+        }
+
+        // Discussion Functions
+        function openDiscussion(discussionId) {
+            console.log('Opening discussion:', discussionId);
+            // In a real app, this would navigate to the discussion detail page
+        }
+
+        function voteUp(discussionId) {
+            const voteElement = document.getElementById('votes-' + discussionId);
+            if (voteElement) {
+                const currentVotes = parseInt(voteElement.textContent);
+                voteElement.textContent = currentVotes + 1;
+                
+                // Add visual feedback
+                voteElement.parentElement.classList.add('text-secondary');
+                setTimeout(() => {
+                    voteElement.parentElement.classList.remove('text-secondary');
+                }, 1000);
+            }
+        }
+
+        function shareDiscussion(discussionId) {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'CitizenVoice Discussion',
+                    text: 'Check out this community discussion on CitizenVoice',
+                    url: window.location.href + '#' + discussionId
+                });
+            } else {
+                // Fallback for browsers that don't support Web Share API
+                const url = window.location.href + '#' + discussionId;
+                navigator.clipboard.writeText(url).then(() => {
+                    alert('Discussion link copied to clipboard!');
+                });
+            }
+        }
+
+        function loadMoreDiscussions() {
+            // Mock loading more discussions
+            console.log('Loading more discussions...');
+            
+            // Add loading state
+            const button = event.target;
+            const originalText = button.textContent;
+            button.textContent = 'Loading...';
+            button.disabled = true;
+            
+            // Simulate loading delay
+            setTimeout(() => {
+                button.textContent = originalText;
+                button.disabled = false;
+                console.log('More discussions loaded');
+            }, 1500);
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('new-topic-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                hideNewTopicModal();
+            }
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                hideNewTopicModal();
+            }
+        });
+    </script>
+<script id="dhws-dataInjector" src="../public/dhws-data-injector.js"></script>
+</body>
+</html>

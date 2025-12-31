@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Agency Login</title>
+
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #0d0d0d;
+      color: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+      animation: fadeIn 1.2s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(1.05); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .login-container {
+      background-color: #1a1a1a;
+      padding: 35px;
+      border-radius: 14px;
+      width: 330px;
+      text-align: center;
+      box-shadow: 0 0 25px rgba(0,0,0,0.6);
+      animation: slideUp 1s ease-out;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(40px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .login-container img {
+      width: 90px;
+      margin-bottom: 20px;
+      animation: pulse 2.5s infinite ease-in-out;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 0.9; }
+      50% { transform: scale(1.08); opacity: 1; }
+      100% { transform: scale(1); opacity: 0.9; }
+    }
+
+    input[type="text"], input[type="password"] {
+      width: 100%;
+      padding: 12px;
+      margin: 12px 0;
+      border: none;
+      border-radius: 6px;
+      background-color: #262626;
+      color: #ffffff;
+      transition: 0.3s;
+    }
+
+    input:focus {
+      background-color: #333333;
+      outline: none;
+      box-shadow: 0 0 8px #0078D7;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      background-color: #0078D7;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+      animation: fadeIn 1.5s ease-in-out;
+    }
+
+    button:hover {
+      background-color: #005fa3;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="login-container">
+    <img src="T1.png" alt="Agency Icon" />
+    <h2>Agency Login</h2>
+
+    <input type="text" id="username" placeholder="Username" />
+    <input type="password" id="password" placeholder="Password" />
+
+    <button onclick="login()">Login</button>
+  </div>
+
+  <script>
+    function login() {
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+
+      if (username === "Icon" && password === "Admin500") {
+        window.location.href = "agency_dashboard.html";
+      } else {
+        alert("Invalid credentials. Please try again.");
+      }
+    }
+  </script>
+</body>
+</html>
