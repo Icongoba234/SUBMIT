@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Register - CitizenVoice</title>
+
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #0d0d0d;
+      color: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+      overflow-y: auto;
+      animation: fadeIn 1.2s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(1.05); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .register-container {
+      background-color: #1a1a1a;
+      padding: 35px;
+      border-radius: 14px;
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 0 25px rgba(0,0,0,0.6);
+      animation: slideUp 1s ease-out;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(40px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .register-container img {
+      width: 90px;
+      margin-bottom: 20px;
+      animation: pulse 2.5s infinite ease-in-out;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 0.9; }
+      50% { transform: scale(1.08); opacity: 1; }
+      100% { transform: scale(1); opacity: 0.9; }
+    }
+
+    input[type="text"], input[type="email"], input[type="password"] {
+      width: 100%;
+      padding: 12px;
+      margin: 12px 0;
+      border: none;
+      border-radius: 6px;
+      background-color: #262626;
+      color: #ffffff;
+      transition: 0.3s;
+      box-sizing: border-box;
+    }
+
+    input:focus {
+      background-color: #333333;
+      outline: none;
+      box-shadow: 0 0 8px #0078D7;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      background-color: #0078D7;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+      animation: fadeIn 1.5s ease-in-out;
+    }
+
+    button:hover {
+      background-color: #005fa3;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+    }
+
+    button:disabled {
+      background-color: #555;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .error-message {
+      color: #ff4444;
+      font-size: 12px;
+      margin-top: 5px;
+      text-align: left;
+      display: none;
+    }
+
+    .error-message.show {
+      display: block;
+    }
+
+    .input-group {
+      margin-bottom: 8px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="register-container">
+    <img src="T1.png" alt="CitizenVoice Icon" />
+    <h2>Create Account</h2>
+
+    <form id="registerForm" onsubmit="register(event)">
+      <div class="input-group">
+        <input type="text" id="fullname" placeholder="Full Name" required />
+        <div class="error-message" id="fullname-error"></div>
+      </div>
+
+      <div class="input-group">
+        <input type="email" id="email" placeholder="Email" required />
+        <div class="error-message" id="email-error"></div>
+      </div>
+
+      <div class="input-group">
+        <input type="password" id="password" placeholder="Password" required minlength="6" />
+        <div class="error-message" id="password-error"></div>
+      </div>
+
+      <div class="input-group">
+        <input type="password" id="confirmPassword" placeholder="Confirm Password" required />
+        <div class="error-message" id="confirmPassword-error"></div>
+      </div>
+
+      <button type="submit" id="registerButton">Register</button>
+    </form>
+
+    <p style="margin-top: 15px; font-size: 12px; color: #888;">
+      Already have an account? <a href="login.html" style="color: #0078D7; text-decoration: none;">Login</a>
+    </p>
+  </div>
+
+  <script src="../public/api.js"></script>
+  <script>
+    // Check if already logged in
+    if (isLoggedIn()) {
+      const user = getUser();
+      if (user.role === 'admin') {
+        window.location.href = 'admin_dashboard.html';
+      } else if (user.role === 'agency') {
+        window.location.href = 'agency_dashboard.html';
+      } else {
+        window.location.href = 'homepage.html';
+      }
+    }
+
+    function showError(fieldId, message) {
+      const errorEl = document.getElementById(fieldId + '-error');
+      if (errorEl) {
+        errorEl.textContent = message;
+        errorEl.classList.add('show');
+      }
+    }
+
+    function clearErrors() {
+      document.querySelectorAll('.error-message').forEach(el => {
+        el.classList.remove('show');
+        el.textContent = '';
+      });
+    }
+
+    async function register(event) {
+      event.preventDefault();
+      clearErrors();
+
+      const fullname = document.getElementById("fullname").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+      const confirmPassword = document.getElementById("confirmPassword").value;
+
+      // Client-side validation
+      let hasError = false;
+
+      if (!fullname || fullname.length < 2) {
+        showError('fullname', 'Full name must be at least 2 characters');
+        hasError = true;
+      }
+
+      if (!email || !email.includes('@')) {
+        showError('email', 'Please enter a valid email address');
+        hasError = true;
+      }
+
+      if (!password || password.length < 6) {
+        showError('password', 'Password must be at least 6 characters');
+        hasError = true;
+      }
+
+      if (password !== confirmPassword) {
+        showError('confirmPassword', 'Passwords do not match');
+        hasError = true;
+      }
+
+      if (hasError) {
+        return;
+      }
+
+      const button = document.getElementById('registerButton');
+      const originalText = button.textContent;
+      button.disabled = true;
+      button.textContent = "Registering...";
+
+      try {
+        const { response, data } = await apiRequest('/auth/register', {
+          method: 'POST',
+          body: JSON.stringify({ 
+            fullname, 
+            email, 
+            password 
+          })
+        });
+
+        // Check if response was successful
+        if (response.ok && data.success) {
+          // Store token and user
+          localStorage.setItem('token', data.data.token);
+          localStorage.setItem('user', JSON.stringify(data.data.user));
+          
+          alert('Registration successful! Redirecting...');
+          
+          // Redirect based on role
+          const role = data.data.user.role;
+          if (role === 'admin') {
+            window.location.href = 'admin_dashboard.html';
+          } else if (role === 'agency') {
+            window.location.href = 'agency_dashboard.html';
+          } else {
+            window.location.href = 'homepage.html';
+          }
+        } else {
+          // Handle API error responses
+          const errorMessage = data.message || 'Registration failed';
+          
+          if (errorMessage.includes('email') || errorMessage.includes('Email')) {
+            showError('email', errorMessage);
+          } else if (errorMessage.includes('password') || errorMessage.includes('Password')) {
+            showError('password', errorMessage);
+          } else if (errorMessage.includes('Fullname') || errorMessage.includes('fullname')) {
+            showError('fullname', errorMessage);
+          } else {
+            alert(errorMessage);
+          }
+          
+          button.disabled = false;
+          button.textContent = originalText;
+        }
+      } catch (error) {
+        console.error('Registration error:', error);
+        
+        // Handle network/connection errors
+        if (error.message && (error.message.includes('fetch') || error.message.includes('Failed to fetch') || error.message.includes('NetworkError'))) {
+          alert('Cannot connect to server. Please make sure:\n1. The backend server is running on http://localhost:3000\n2. You have started the server with "npm start" in the backend folder');
+        } 
+        // Handle JSON parsing errors (might be HTML error page)
+        else if (error.message && error.message.includes('JSON')) {
+          alert('Server returned an invalid response. Please check if the backend is running correctly.');
+        }
+        // Handle other errors
+        else {
+          const errorMsg = error.message || 'An unexpected error occurred. Please try again.';
+          alert('Error: ' + errorMsg);
+        }
+        
+        button.disabled = false;
+        button.textContent = originalText;
+      }
+    }
+
+    // Allow Enter key to submit
+    document.getElementById('confirmPassword').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        document.getElementById('registerForm').dispatchEvent(new Event('submit'));
+      }
+    });
+  </script>
+<script id="dhws-dataInjector" src="../public/dhws-data-injector.js"></script>
+</body>
+</html>
+
