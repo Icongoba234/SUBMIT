@@ -151,8 +151,8 @@ html,
 :host {
   line-height: 1.5;
   /* 1 */
-  -webkit-text-size-adjust: 100%; /* Safari */
-  text-size-adjust: 100%; /* Chrome 54+, Edge 79+, Samsung Internet 6.0+ */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
   /* 2 */
   -moz-tab-size: 4;
   /* 3 */
@@ -353,7 +353,6 @@ input:where([type='button']),
 input:where([type='reset']),
 input:where([type='submit']) {
   -webkit-appearance: button;
-  appearance: button;
   /* 1 */
   background-color: transparent;
   /* 2 */

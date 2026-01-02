@@ -32,12 +32,19 @@
                     <a href="track_progress.html" class="text-primary font-semibold">Track Progress</a>
                     <a href="public_transparency_hub.html" class="text-text-secondary hover:text-primary transition-colors">Public Hub</a>
                     <a href="community_forum.html" class="text-text-secondary hover:text-primary transition-colors">Community</a>
-                    <a href="login.html" class="btn-outline text-sm py-2 px-4">Agency Login</a>
+                    <span id="auth-links" class="flex items-center gap-3">
+                        <a href="login.html" class="btn-outline text-sm py-2 px-4" id="login-link">Login / Agency Login</a>
+                        <div id="profile-section" class="hidden flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity" onclick="openProfileModal()">
+                            <img id="profile-picture" src="" alt="Profile Picture" class="w-8 h-8 rounded-full object-cover border-2 border-primary" />
+                            <span id="user-name" class="text-sm font-semibold text-text-primary"></span>
+                        </div>
+                        <button type="button" onclick="logout()" class="btn-outline text-sm py-2 px-4 hidden" id="logout-btn">Logout</button>
+                    </span>
                 </div>
                 
                 <!-- Mobile Menu Button -->
                 <div class="md:hidden">
-                    <button id="mobile-menu-button" class="text-text-secondary hover:text-primary">
+                    <button type="button" id="mobile-menu-button" class="text-text-secondary hover:text-primary" aria-label="Toggle mobile menu">
                         <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
                         </svg>
@@ -73,7 +80,7 @@
                     <a href="submit_complaint.html" class="btn-primary">
                         Submit New Complaint
                     </a>
-                    <button id="export-btn" class="btn-outline">
+                    <button type="button" id="export-btn" class="btn-outline">
                         <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                         </svg>
@@ -94,7 +101,7 @@
                             <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                         </svg>
                     </div>
-                    <div class="text-2xl font-bold text-primary mb-1">7</div>
+                    <div class="text-2xl font-bold text-primary mb-1" id="stat-total">0</div>
                     <div class="text-sm text-text-secondary">Total Complaints</div>
                 </div>
                 
@@ -104,7 +111,7 @@
                             <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                         </svg>
                     </div>
-                    <div class="text-2xl font-bold text-secondary mb-1">4</div>
+                    <div class="text-2xl font-bold text-secondary mb-1" id="stat-resolved">0</div>
                     <div class="text-sm text-text-secondary">Resolved</div>
                 </div>
                 
@@ -114,7 +121,7 @@
                             <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                         </svg>
                     </div>
-                    <div class="text-2xl font-bold text-warning mb-1">2</div>
+                    <div class="text-2xl font-bold text-warning mb-1" id="stat-in-progress">0</div>
                     <div class="text-sm text-text-secondary">In Progress</div>
                 </div>
                 
@@ -124,7 +131,7 @@
                             <path d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/>
                         </svg>
                     </div>
-                    <div class="text-2xl font-bold text-accent mb-1">1</div>
+                    <div class="text-2xl font-bold text-accent mb-1" id="stat-pending">0</div>
                     <div class="text-sm text-text-secondary">Under Review</div>
                 </div>
             </div>
@@ -140,14 +147,19 @@
                         <input type="text" placeholder="Search your complaints..." class="input-field" />
                     </div>
                     <div class="flex flex-col sm:flex-row gap-4">
-                        <select class="input-field min-w-48">
+                        <div>
+                            <label for="status-filter-select" class="sr-only">Filter by Status</label>
+                            <select id="status-filter-select" class="input-field min-w-48" aria-label="Filter by Status">
                             <option>All Statuses</option>
                             <option>Under Review</option>
                             <option>In Progress</option>
                             <option>Resolved</option>
                             <option>Closed</option>
                         </select>
-                        <select class="input-field min-w-48">
+                        </div>
+                        <div>
+                            <label for="category-filter-select" class="sr-only">Filter by Category</label>
+                            <select id="category-filter-select" class="input-field min-w-48" aria-label="Filter by Category">
                             <option>All Categories</option>
                             <option>Road & Infrastructure</option>
                             <option>Public Safety</option>
@@ -155,197 +167,46 @@
                             <option>Water & Utilities</option>
                             <option>Parks & Recreation</option>
                         </select>
-                        <input type="date" class="input-field" value="2025-01-01" />
-                        <input type="date" class="input-field" value="2025-10-01" />
+                                    </div>
+                                    <div>
+                            <label for="start-date" class="sr-only">Start Date</label>
+                            <input type="date" id="start-date" class="input-field" value="2025-01-01" aria-label="Start Date" />
+                                    </div>
+                                    <div>
+                            <label for="end-date" class="sr-only">End Date</label>
+                            <input type="date" id="end-date" class="input-field" value="2025-10-01" aria-label="End Date" />
+                                    </div>
+                                </div>
+                                    </div>
+                                    </div>
+                                </div>
+    </section>
+
+    <!-- Real-time Updates Section -->
+    <section class="py-6 bg-background hidden" id="realtime-updates-section">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-primary-50 border-l-4 border-primary rounded-lg p-4 mb-4" id="realtime-updates-container">
+                <div class="flex items-center justify-between mb-2">
+                    <h3 class="text-lg font-semibold text-text-primary flex items-center gap-2">
+                        <svg class="w-5 h-5 text-primary animate-pulse" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                            </svg>
+                        Real-time Updates
+                    </h3>
+                    <button type="button" onclick="clearUpdates()" class="text-sm text-text-secondary hover:text-primary" aria-label="Clear updates">Clear</button>
+                        </div>
+                <div class="space-y-2" id="updates-list">
+                    <!-- Updates will be loaded here dynamically -->
+                    </div>
                     </div>
                 </div>
-            </div>
-        </div>
     </section>
 
     <!-- Complaints List -->
     <section class="py-8 bg-background">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="space-y-6">
-                <!-- Complaint Item 1 -->
-                <div class="card">
-                    <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-4">
-                        <div class="flex-1">
-                            <div class="flex items-center gap-3 mb-2">
-                                <h3 class="text-xl font-semibold text-text-primary">Pothole on Elm Street</h3>
-                                <span class="status-error">High Priority</span>
-                            </div>
-                            <p class="text-text-secondary mb-2">Large pothole causing vehicle damage near intersection with Oak Avenue.</p>
-                            <div class="flex items-center gap-4 text-sm text-text-secondary">
-                                <span>ID: #CW-2025-001</span>
-                                <span>Category: Road & Infrastructure</span>
-                                <span>Submitted: Sep 15, 2025</span>
-                            </div>
-                        </div>
-                        <div class="text-right">
-                            <div class="text-lg font-semibold text-warning mb-1">In Progress</div>
-                            <div class="text-sm text-text-secondary">Last updated: 2 days ago</div>
-                        </div>
-                    </div>
-                    
-                    <!-- Progress Timeline -->
-                    <div class="bg-background rounded-lg p-4 mb-4">
-                        <h4 class="font-semibold text-text-primary mb-3">Progress Timeline</h4>
-                        <div class="relative">
-                            <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
-                            <div class="space-y-4">
-                                <div class="flex items-start gap-4">
-                                    <div class="w-8 h-8 bg-secondary rounded-full flex items-center justify-center flex-shrink-0">
-                                        <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
-                                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                        </svg>
-                                    </div>
-                                    <div>
-                                        <div class="font-medium text-text-primary">Work Scheduled</div>
-                                        <div class="text-sm text-text-secondary">Repair crew assigned for Oct 3, 2025</div>
-                                        <div class="text-xs text-text-secondary">Sep 28, 2025 - Public Works Department</div>
-                                    </div>
-                                </div>
-                                <div class="flex items-start gap-4">
-                                    <div class="w-8 h-8 bg-secondary rounded-full flex items-center justify-center flex-shrink-0">
-                                        <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
-                                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                        </svg>
-                                    </div>
-                                    <div>
-                                        <div class="font-medium text-text-primary">Site Inspection Completed</div>
-                                        <div class="text-sm text-text-secondary">Damage assessment and repair plan finalized</div>
-                                        <div class="text-xs text-text-secondary">Sep 20, 2025 - City Engineer</div>
-                                    </div>
-                                </div>
-                                <div class="flex items-start gap-4">
-                                    <div class="w-8 h-8 bg-secondary rounded-full flex items-center justify-center flex-shrink-0">
-                                        <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
-                                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                        </svg>
-                                    </div>
-                                    <div>
-                                        <div class="font-medium text-text-primary">Complaint Acknowledged</div>
-                                        <div class="text-sm text-text-secondary">Assigned to Public Works Department</div>
-                                        <div class="text-xs text-text-secondary">Sep 15, 2025 - CitizenVoice System</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Progress Bar -->
-                    <div class="mb-4">
-                        <div class="flex justify-between items-center mb-2">
-                            <span class="text-sm font-medium text-text-primary">Resolution Progress</span>
-                            <span class="text-sm text-text-secondary">75%</span>
-                        </div>
-                        <div class="w-full bg-border-light rounded-full h-2">
-                            <div class="bg-warning h-2 rounded-full" style="width: 75%"></div>
-                        </div>
-                    </div>
-                    
-                    <div class="flex flex-col sm:flex-row gap-3">
-                        <button class="btn-outline flex-1">View Details</button>
-                        <button class="btn-primary flex-1">Add to Calendar</button>
-                    </div>
-                </div>
-
-                <!-- Complaint Item 2 -->
-                <div class="card">
-                    <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-4">
-                        <div class="flex-1">
-                            <div class="flex items-center gap-3 mb-2">
-                                <h3 class="text-xl font-semibold text-text-primary">Broken Streetlight on Park Avenue</h3>
-                                <span class="status-success">Resolved</span>
-                            </div>
-                            <p class="text-text-secondary mb-2">Streetlight pole damaged creating safety hazard for pedestrians.</p>
-                            <div class="flex items-center gap-4 text-sm text-text-secondary">
-                                <span>ID: #CW-2025-002</span>
-                                <span>Category: Public Safety</span>
-                                <span>Submitted: Aug 28, 2025</span>
-                            </div>
-                        </div>
-                        <div class="text-right">
-                            <div class="text-lg font-semibold text-secondary mb-1">Resolved</div>
-                            <div class="text-sm text-text-secondary">Completed: Sep 12, 2025</div>
-                        </div>
-                    </div>
-                    
-                    <!-- Progress Bar -->
-                    <div class="mb-4">
-                        <div class="flex justify-between items-center mb-2">
-                            <span class="text-sm font-medium text-text-primary">Resolution Progress</span>
-                            <span class="text-sm text-text-secondary">100%</span>
-                        </div>
-                        <div class="w-full bg-border-light rounded-full h-2">
-                            <div class="bg-secondary h-2 rounded-full" style="width: 100%"></div>
-                        </div>
-                    </div>
-                    
-                    <div class="bg-secondary-50 rounded-lg p-4 mb-4">
-                        <div class="flex items-center gap-3 mb-2">
-                            <svg class="w-5 h-5 text-secondary" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                            </svg>
-                            <span class="font-medium text-secondary">Resolution Complete</span>
-                        </div>
-                        <p class="text-text-secondary text-sm">New LED streetlight installed and tested. Safety hazard eliminated.</p>
-                    </div>
-                    
-                    <div class="flex flex-col sm:flex-row gap-3">
-                        <button class="btn-outline flex-1">View Timeline</button>
-                        <button class="btn-secondary flex-1">Rate Resolution</button>
-                    </div>
-                </div>
-
-                <!-- Complaint Item 3 -->
-                <div class="card">
-                    <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-4">
-                        <div class="flex-1">
-                            <div class="flex items-center gap-3 mb-2">
-                                <h3 class="text-xl font-semibold text-text-primary">Missed Trash Collection - Maple Street</h3>
-                                <span class="status-warning">Under Review</span>
-                            </div>
-                            <p class="text-text-secondary mb-2">Residential area experiencing irregular waste pickup affecting multiple blocks.</p>
-                            <div class="flex items-center gap-4 text-sm text-text-secondary">
-                                <span>ID: #CW-2025-003</span>
-                                <span>Category: Waste Management</span>
-                                <span>Submitted: Sep 30, 2025</span>
-                            </div>
-                        </div>
-                        <div class="text-right">
-                            <div class="text-lg font-semibold text-accent mb-1">Under Review</div>
-                            <div class="text-sm text-text-secondary">Last updated: 1 day ago</div>
-                        </div>
-                    </div>
-                    
-                    <!-- Progress Bar -->
-                    <div class="mb-4">
-                        <div class="flex justify-between items-center mb-2">
-                            <span class="text-sm font-medium text-text-primary">Resolution Progress</span>
-                            <span class="text-sm text-text-secondary">25%</span>
-                        </div>
-                        <div class="w-full bg-border-light rounded-full h-2">
-                            <div class="bg-accent h-2 rounded-full" style="width: 25%"></div>
-                        </div>
-                    </div>
-                    
-                    <div class="bg-warning-50 rounded-lg p-4 mb-4">
-                        <div class="flex items-center gap-3 mb-2">
-                            <svg class="w-5 h-5 text-warning" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                            </svg>
-                            <span class="font-medium text-warning">Initial Review</span>
-                        </div>
-                        <p class="text-text-secondary text-sm">Complaint forwarded to Waste Management Department for investigation.</p>
-                    </div>
-                    
-                    <div class="flex flex-col sm:flex-row gap-3">
-                        <button class="btn-outline flex-1">View Details</button>
-                        <button class="btn-primary flex-1">Add Update</button>
-                    </div>
-                </div>
+            <div class="space-y-6" id="complaints-container">
+                <!-- Complaints will be loaded here dynamically -->
             </div>
         </div>
     </section>
@@ -408,7 +269,7 @@
                             <div class="text-sm text-text-secondary">Get notified when your complaint status changes</div>
                         </div>
                         <label class="relative inline-flex items-center cursor-pointer">
-                            <input type="checkbox" class="sr-only peer" checked />
+                            <input type="checkbox" class="sr-only peer" checked aria-label="Enable status updates notifications" />
                             <div class="w-11 h-6 bg-border peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
                         </label>
                     </div>
@@ -419,7 +280,7 @@
                             <div class="text-sm text-text-secondary">Receive notifications for agency communications</div>
                         </div>
                         <label class="relative inline-flex items-center cursor-pointer">
-                            <input type="checkbox" class="sr-only peer" checked />
+                            <input type="checkbox" class="sr-only peer" checked aria-label="Enable agency response notifications" />
                             <div class="w-11 h-6 bg-border peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
                         </label>
                     </div>
@@ -430,7 +291,7 @@
                             <div class="text-sm text-text-secondary">Stay informed about similar issues in your area</div>
                         </div>
                         <label class="relative inline-flex items-center cursor-pointer">
-                            <input type="checkbox" class="sr-only peer" />
+                            <input type="checkbox" class="sr-only peer" aria-label="Enable community updates notifications" />
                             <div class="w-11 h-6 bg-border peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
                         </label>
                     </div>
@@ -441,14 +302,14 @@
                             <div class="text-sm text-text-secondary">Get a weekly digest of your complaint activity</div>
                         </div>
                         <label class="relative inline-flex items-center cursor-pointer">
-                            <input type="checkbox" class="sr-only peer" checked />
+                            <input type="checkbox" class="sr-only peer" checked aria-label="Enable weekly summary notifications" />
                             <div class="w-11 h-6 bg-border peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
                         </label>
                     </div>
                 </div>
                 
                 <div class="mt-8 pt-6 border-t border-border">
-                    <button class="btn-primary">Save Preferences</button>
+                    <button type="button" class="btn-primary">Save Preferences</button>
                 </div>
             </div>
         </div>
@@ -507,29 +368,908 @@
         </div>
     </footer>
 
+    <script src="../public/api.js"></script>
     <script>
+        // Check authentication on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            // Update auth links
+            updateAuthLinks();
+            
+            if (!isLoggedIn()) {
+                alert('Please login to track your complaints');
+                window.location.href = 'login.html';
+                return;
+            }
+            loadMyComplaints();
+        });
+
+        // Update auth links based on login status
+        function updateAuthLinks() {
+            const loginLink = document.getElementById('login-link');
+            const logoutBtn = document.getElementById('logout-btn');
+            const profileSection = document.getElementById('profile-section');
+            
+            if (isLoggedIn()) {
+                if (loginLink) loginLink.classList.add('hidden');
+                if (logoutBtn) logoutBtn.classList.remove('hidden');
+                if (profileSection) profileSection.classList.remove('hidden');
+                loadUserProfile();
+            } else {
+                if (loginLink) loginLink.classList.remove('hidden');
+                if (logoutBtn) logoutBtn.classList.add('hidden');
+                if (profileSection) profileSection.classList.add('hidden');
+            }
+        }
+
+        // Profile Functions
+        function updateUserInfo(user) {
+            const userNameEl = document.getElementById('user-name');
+            if (userNameEl && user.fullname) {
+                userNameEl.textContent = user.fullname;
+            }
+            
+            const profilePicEl = document.getElementById('profile-picture');
+            const API_BASE = 'http://localhost:3000';
+            if (profilePicEl) {
+                if (user.profile_picture) {
+                    if (user.profile_picture.startsWith('/uploads/')) {
+                        profilePicEl.src = `${API_BASE}${user.profile_picture}`;
+                    } else {
+                        profilePicEl.src = user.profile_picture;
+                    }
+                } else {
+                    profilePicEl.src = 'https://ui-avatars.com/api/?name=' + encodeURIComponent(user.fullname || 'User') + '&background=0078D7&color=fff&size=64&bold=true';
+                }
+                profilePicEl.onerror = function() {
+                    this.src = 'https://ui-avatars.com/api/?name=' + encodeURIComponent(user.fullname || 'User') + '&background=0078D7&color=fff&size=64&bold=true';
+                };
+            }
+        }
+
+        async function loadUserProfile() {
+            try {
+                const { data } = await apiRequest('/auth/profile');
+                if (data.success) {
+                    updateUserInfo(data.data.user);
+                    return data.data.user;
+                }
+            } catch (error) {
+                console.error('Load profile error:', error);
+            }
+            return null;
+        }
+
+        function openProfileModal() {
+            const modal = document.getElementById('profile-modal');
+            if (modal) {
+                modal.classList.remove('hidden');
+                loadProfileData();
+            }
+        }
+
+        function closeProfileModal() {
+            const modal = document.getElementById('profile-modal');
+            if (modal) modal.classList.add('hidden');
+        }
+
+        async function loadProfileData() {
+            try {
+                const { data } = await apiRequest('/auth/profile');
+                if (data.success) {
+                    const user = data.data.user;
+                    const fullnameEl = document.getElementById('profile-fullname');
+                    const emailEl = document.getElementById('profile-email');
+                    if (fullnameEl) fullnameEl.value = user.fullname || '';
+                    if (emailEl) emailEl.value = user.email || '';
+                    
+                    const previewEl = document.getElementById('profile-preview');
+                    const API_BASE = 'http://localhost:3000';
+                    if (previewEl) {
+                        if (user.profile_picture) {
+                            if (user.profile_picture.startsWith('/uploads/')) {
+                                previewEl.src = `${API_BASE}${user.profile_picture}`;
+                            } else {
+                                previewEl.src = user.profile_picture;
+                            }
+                        } else {
+                            previewEl.src = 'https://ui-avatars.com/api/?name=' + encodeURIComponent(user.fullname || 'User') + '&background=0078D7&color=fff&size=128&bold=true';
+                        }
+                        previewEl.onerror = function() {
+                            this.src = 'https://ui-avatars.com/api/?name=' + encodeURIComponent(user.fullname || 'User') + '&background=0078D7&color=fff&size=128&bold=true';
+                        };
+                    }
+                    
+                    const agencySection = document.getElementById('profile-agency-section');
+                    if (agencySection) {
+                        if (user.role === 'agency' && user.agency) {
+                            agencySection.style.display = 'block';
+                            const agencyEl = document.getElementById('profile-agency');
+                            if (agencyEl) agencyEl.value = user.agency.name || '';
+                        } else {
+                            agencySection.style.display = 'none';
+                        }
+                    }
+                }
+            } catch (error) {
+                console.error('Load profile data error:', error);
+            }
+        }
+
+        // Initialize profile form handlers
+        document.addEventListener('DOMContentLoaded', function() {
+            const profilePicInput = document.getElementById('profile-picture-input');
+            if (profilePicInput) {
+                profilePicInput.addEventListener('change', function(e) {
+                    const file = e.target.files[0];
+                    if (file) {
+                        if (file.size > 5 * 1024 * 1024) {
+                            alert('File size must be less than 5MB');
+                            e.target.value = '';
+                            return;
+                        }
+                        const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+                        if (!allowedTypes.includes(file.type)) {
+                            alert('Please select a valid image file (JPG, PNG, GIF, or WEBP)');
+                            e.target.value = '';
+                            return;
+                        }
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            const previewEl = document.getElementById('profile-preview');
+                            if (previewEl) previewEl.src = e.target.result;
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+            }
+
+            const profileForm = document.getElementById('profile-form');
+            if (profileForm) {
+                profileForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    const formData = new FormData();
+                    const fullname = document.getElementById('profile-fullname').value.trim();
+                    const profilePictureInput = document.getElementById('profile-picture-input');
+                    
+                    if (!fullname || fullname.length < 2) {
+                        alert('Full name must be at least 2 characters');
+                        return;
+                    }
+                    
+                    formData.append('fullname', fullname);
+                    if (profilePictureInput && profilePictureInput.files.length > 0) {
+                        formData.append('profile_picture', profilePictureInput.files[0]);
+                    }
+                    
+                    const saveBtn = document.getElementById('profile-save-btn');
+                    const originalText = saveBtn ? saveBtn.textContent : 'Save Changes';
+                    if (saveBtn) {
+                        saveBtn.disabled = true;
+                        saveBtn.textContent = 'Saving...';
+                    }
+                    
+                    try {
+                        const token = getToken();
+                        const API_BASE_URL = 'http://localhost:3000/api';
+                        const response = await fetch(`${API_BASE_URL}/auth/profile`, {
+                            method: 'PATCH',
+                            headers: { 'Authorization': `Bearer ${token}` },
+                            body: formData
+                        });
+                        
+                        const data = await response.json();
+                        
+                        if (response.ok && data.success) {
+                            const user = getUser();
+                            user.fullname = data.data.user.fullname;
+                            user.profile_picture = data.data.user.profile_picture;
+                            localStorage.setItem('user', JSON.stringify(user));
+                            updateUserInfo(data.data.user);
+                            alert('Profile updated successfully!');
+                            closeProfileModal();
+                        } else {
+                            alert(data.message || 'Failed to update profile');
+                        }
+                    } catch (error) {
+                        console.error('Update profile error:', error);
+                        alert('Failed to update profile');
+                    } finally {
+                        if (saveBtn) {
+                            saveBtn.disabled = false;
+                            saveBtn.textContent = originalText;
+                        }
+                    }
+                });
+            }
+
+            const profileModal = document.getElementById('profile-modal');
+            if (profileModal) {
+                profileModal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        closeProfileModal();
+                    }
+                });
+            }
+        });
+
         // Mobile menu toggle
         document.getElementById('mobile-menu-button').addEventListener('click', function() {
             const mobileMenu = document.getElementById('mobile-menu');
             mobileMenu.classList.toggle('hidden');
         });
 
-        // Export functionality
-        document.getElementById('export-btn').addEventListener('click', function() {
-            // Simulate export functionality
-            alert('Exporting your complaint records as PDF...');
-        });
-
-        // Real-time updates simulation
-        function simulateRealTimeUpdates() {
-            // This would connect to WebSocket in a real application
-            console.log('Connected to real-time updates');
+        // Load user's complaints
+        async function loadMyComplaints() {
+            try {
+                const { data } = await apiRequest('/complaints/my');
+                
+                if (data.success) {
+                    const complaints = data.data.complaints;
+                    updateStats(complaints);
+                    displayComplaints(complaints);
+                }
+            } catch (error) {
+                console.error('Load complaints error:', error);
+                handleApiError(error, 'Failed to load complaints');
+            }
         }
 
-        // Initialize real-time updates
-        window.addEventListener('load', function() {
-            simulateRealTimeUpdates();
+        // Update statistics
+        function updateStats(complaints) {
+            const total = complaints.length;
+            const resolved = complaints.filter(c => c.status === 'resolved').length;
+            const inProgress = complaints.filter(c => c.status === 'in_review').length;
+            const pending = complaints.filter(c => c.status === 'pending').length;
+
+            // Update stats display
+            const totalEl = document.getElementById('stat-total');
+            const resolvedEl = document.getElementById('stat-resolved');
+            const inProgressEl = document.getElementById('stat-in-progress');
+            const pendingEl = document.getElementById('stat-pending');
+
+            if (totalEl) totalEl.textContent = total;
+            if (resolvedEl) resolvedEl.textContent = resolved;
+            if (inProgressEl) inProgressEl.textContent = inProgress;
+            if (pendingEl) pendingEl.textContent = pending;
+        }
+
+        // Display complaints
+        function displayComplaints(complaints) {
+            const container = document.getElementById('complaints-container');
+            if (!container) return;
+
+            if (complaints.length === 0) {
+                container.innerHTML = `
+                    <div class="card text-center py-12">
+                        <svg class="w-16 h-16 text-text-secondary mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                        </svg>
+                        <h3 class="text-xl font-semibold text-text-primary mb-2">No Complaints Yet</h3>
+                        <p class="text-text-secondary mb-4">You haven't submitted any complaints yet.</p>
+                        <a href="submit_complaint.html" class="btn-primary inline-block">Submit Your First Complaint</a>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = complaints.map(complaint => {
+                const statusClass = {
+                    'pending': 'status-warning',
+                    'in_review': 'status-info',
+                    'resolved': 'status-success'
+                }[complaint.status] || 'status-warning';
+
+                const statusText = {
+                    'pending': 'Under Review',
+                    'in_review': 'In Progress',
+                    'resolved': 'Resolved'
+                }[complaint.status] || complaint.status;
+
+                const progress = {
+                    'pending': 25,
+                    'in_review': 75,
+                    'resolved': 100
+                }[complaint.status] || 0;
+
+                const progressColor = {
+                    'pending': 'bg-accent',
+                    'in_review': 'bg-warning',
+                    'resolved': 'bg-secondary'
+                }[complaint.status] || 'bg-accent';
+
+                const createdDate = new Date(complaint.created_at).toLocaleDateString();
+                const complaintId = complaint.tracking_number || ('CV-2025-' + complaint.id.toString().padStart(6, '0'));
+
+                return `
+                    <div class="card">
+                        <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-4">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-3 mb-2">
+                                    <h3 class="text-xl font-semibold text-text-primary">${complaint.title || 'Untitled Complaint'}</h3>
+                                    <span class="${statusClass}">${statusText}</span>
+                                </div>
+                                <p class="text-text-secondary mb-2">${complaint.description || 'No description provided'}</p>
+                                <div class="flex items-center gap-4 text-sm text-text-secondary">
+                                    <span>Tracking: <span class="font-mono font-semibold">${complaintId}</span></span>
+                                    ${complaint.agency_name ? `<span>Assigned to: ${complaint.agency_name}</span>` : ''}
+                                    <span>Submitted: ${createdDate}</span>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-lg font-semibold ${statusText === 'Resolved' ? 'text-secondary' : statusText === 'In Progress' ? 'text-warning' : 'text-accent'} mb-1">${statusText}</div>
+                                <div class="text-sm text-text-secondary">Last updated: ${createdDate}</div>
+                            </div>
+                        </div>
+                        
+                        ${complaint.status === 'resolved' ? `
+                            <div class="bg-secondary-50 rounded-lg p-4 mb-4">
+                                <div class="flex items-center gap-3 mb-2">
+                                    <svg class="w-5 h-5 text-secondary" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    <span class="font-medium text-secondary">Resolution Complete</span>
+                                </div>
+                                <p class="text-text-secondary text-sm">This complaint has been resolved.</p>
+                            </div>
+                        ` : ''}
+                        
+                        <!-- Progress Bar -->
+                        <div class="mb-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-sm font-medium text-text-primary">Resolution Progress</span>
+                                <span class="text-sm text-text-secondary">${progress}%</span>
+                            </div>
+                            <div class="w-full bg-border-light rounded-full h-2">
+                                <div class="${progressColor} h-2 rounded-full" style="width: ${progress}%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex flex-col sm:flex-row gap-3">
+                            <button type="button" class="btn-outline flex-1" onclick="viewDetails(${complaint.id})">View Details</button>
+                            ${complaint.status === 'resolved' ? 
+                                `<button type="button" class="btn-secondary flex-1" onclick="rateResolution(${complaint.id})">Rate Resolution</button>` :
+                                `<button type="button" class="btn-primary flex-1" onclick="addUpdate(${complaint.id})">Add Update</button>`
+                            }
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        async function viewDetails(complaintId) {
+            const modal = document.getElementById('complaint-details-modal');
+            const content = document.getElementById('complaint-details-content');
+            
+            if (!modal || !content) {
+                // Create modal if it doesn't exist
+                createComplaintDetailsModal();
+                await new Promise(resolve => setTimeout(resolve, 100));
+                return viewDetails(complaintId);
+            }
+
+            modal.classList.remove('hidden');
+            content.innerHTML = '<div class="flex items-center justify-center py-12"><div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div></div>';
+
+            try {
+                const { data } = await apiRequest(`/complaints/${complaintId}`);
+                
+                if (data.success) {
+                    const complaint = data.data.complaint;
+                    const trackingNumber = complaint.tracking_number || ('CV-2025-' + complaint.id.toString().padStart(6, '0'));
+                    
+                    const trackingEl = document.getElementById('details-tracking-number');
+                    if (trackingEl) trackingEl.textContent = trackingNumber;
+
+                    const statusClass = {
+                        'pending': 'bg-accent text-white',
+                        'in_review': 'bg-warning text-white',
+                        'resolved': 'bg-secondary text-white'
+                    }[complaint.status] || 'bg-border text-text-secondary';
+                    
+                    const statusText = {
+                        'pending': 'Pending',
+                        'in_review': 'In Review',
+                        'resolved': 'Resolved'
+                    }[complaint.status] || complaint.status;
+
+                    const createdDate = new Date(complaint.created_at).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    });
+
+                    // Files/Images display
+                    const filesHtml = complaint.files && complaint.files.length > 0 ? `
+                        <div class="mt-6">
+                            <h3 class="text-lg font-semibold text-text-primary mb-4">Submitted Images/Evidence</h3>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                                ${complaint.files.map(file => {
+                                    const API_BASE = 'http://localhost:3000';
+                                    const fileUrl = file.file_path.startsWith('/') ? `${API_BASE}${file.file_path}` : `${API_BASE}/${file.file_path}`;
+                                    const isImage = file.file_type && file.file_type.startsWith('image/');
+                                    const isVideo = file.file_type && file.file_type.startsWith('video/');
+                                    
+                                    return `
+                                        <div class="bg-background rounded-lg p-3 border border-border hover:shadow-lg transition-shadow">
+                                            ${isImage ? `
+                                                <img src="${fileUrl}" alt="${file.file_name}" class="w-full h-48 object-cover rounded-lg mb-2 cursor-pointer" onclick="window.open('${fileUrl}', '_blank')" />
+                                            ` : isVideo ? `
+                                                <video src="${fileUrl}" class="w-full h-48 object-cover rounded-lg mb-2" controls></video>
+                                            ` : `
+                                                <div class="w-full h-48 bg-border-light rounded-lg mb-2 flex items-center justify-center">
+                                                    <svg class="w-12 h-12 text-text-secondary" fill="currentColor" viewBox="0 0 24 24">
+                                                        <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z"/>
+                                                        <path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/>
+                                                    </svg>
+                                                </div>
+                                            `}
+                                            <p class="text-xs text-text-secondary truncate" title="${file.file_name}">${file.file_name}</p>
+                                            <p class="text-xs text-text-secondary">${(file.file_size / 1024 / 1024).toFixed(2)} MB</p>
+                                        </div>
+                                    `;
+                                }).join('')}
+                            </div>
+                        </div>
+                    ` : '';
+
+                    const updatesHtml = complaint.updates && complaint.updates.length > 0 ? `
+                        <div class="mt-6">
+                            <h3 class="text-lg font-semibold text-text-primary mb-4">Update History</h3>
+                            <div class="space-y-3">
+                                ${complaint.updates.map(update => {
+                                    const updateDate = new Date(update.created_at).toLocaleDateString('en-US', {
+                                        year: 'numeric',
+                                        month: 'short',
+                                        day: 'numeric',
+                                        hour: '2-digit',
+                                        minute: '2-digit'
+                                    });
+                                    
+                                    const updateTypeText = {
+                                        'status_change': 'Status Changed',
+                                        'assignment': 'Assignment',
+                                        'comment': 'Comment',
+                                        'resolution': 'Resolution'
+                                    }[update.update_type] || update.update_type;
+
+                                    return `
+                                        <div class="bg-background rounded-lg p-4 border-l-4 border-primary">
+                                            <div class="flex justify-between items-start mb-2">
+                                                <span class="text-sm font-semibold text-text-primary">${updateTypeText}</span>
+                                                <span class="text-xs text-text-secondary">${updateDate}</span>
+                                            </div>
+                                            ${update.old_value && update.new_value ? `
+                                                <p class="text-sm text-text-secondary mb-1">
+                                                    Changed from <span class="font-semibold">${update.old_value}</span> to <span class="font-semibold">${update.new_value}</span>
+                                                </p>
+                                            ` : ''}
+                                            ${update.message ? `<p class="text-sm text-text-primary mt-2">${update.message}</p>` : ''}
+                                        </div>
+                                    `;
+                                }).join('')}
+                            </div>
+                        </div>
+                    ` : '<p class="text-text-secondary text-sm mt-4">No updates yet.</p>';
+
+                    // Additional details
+                    const additionalDetailsHtml = `
+                        <div class="grid md:grid-cols-2 gap-4 mt-6">
+                            ${complaint.category ? `
+                                <div class="bg-background rounded-lg p-4">
+                                    <h5 class="text-sm font-semibold text-text-secondary mb-1">Category</h5>
+                                    <p class="text-text-primary">${complaint.category.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</p>
+                                </div>
+                            ` : ''}
+                            ${complaint.priority ? `
+                                <div class="bg-background rounded-lg p-4">
+                                    <h5 class="text-sm font-semibold text-text-secondary mb-1">Priority</h5>
+                                    <p class="text-text-primary capitalize">${complaint.priority}</p>
+                                </div>
+                            ` : ''}
+                            ${complaint.location ? `
+                                <div class="bg-background rounded-lg p-4 md:col-span-2">
+                                    <h5 class="text-sm font-semibold text-text-secondary mb-1">Location</h5>
+                                    <p class="text-text-primary">${complaint.location}</p>
+                                </div>
+                            ` : ''}
+                        </div>
+                    `;
+
+                    content.innerHTML = `
+                        <div class="space-y-6">
+                            <div class="flex items-center justify-between">
+                                <span class="px-4 py-2 rounded-full text-sm font-semibold ${statusClass}">${statusText}</span>
+                                <span class="text-sm text-text-secondary">Submitted: ${createdDate}</span>
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-bold text-text-primary mb-2">${complaint.title || 'Untitled Complaint'}</h3>
+                                <p class="text-text-secondary">Tracking Number: <span class="font-mono font-semibold text-primary">${complaint.tracking_number || trackingNumber}</span></p>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-semibold text-text-primary mb-2">Description</h4>
+                                <p class="text-text-secondary whitespace-pre-wrap">${complaint.description || 'No description provided'}</p>
+                            </div>
+                            ${additionalDetailsHtml}
+                            ${filesHtml}
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div class="bg-background rounded-lg p-4">
+                                    <h5 class="text-sm font-semibold text-text-secondary mb-1">Submitted By</h5>
+                                    <p class="text-text-primary">${complaint.user_name || 'Anonymous'}</p>
+                                    <p class="text-sm text-text-secondary">${complaint.user_email || ''}</p>
+                                </div>
+                                ${complaint.agency_name ? `
+                                    <div class="bg-background rounded-lg p-4">
+                                        <h5 class="text-sm font-semibold text-text-secondary mb-1">Assigned Agency</h5>
+                                        <p class="text-text-primary">${complaint.agency_name}</p>
+                                        ${complaint.agency_email ? `<p class="text-sm text-text-secondary">${complaint.agency_email}</p>` : ''}
+                                    </div>
+                                ` : `
+                                    <div class="bg-background rounded-lg p-4">
+                                        <h5 class="text-sm font-semibold text-text-secondary mb-1">Assigned Agency</h5>
+                                        <p class="text-accent">Not yet assigned</p>
+                                    </div>
+                                `}
+                            </div>
+                            ${updatesHtml}
+                            ${complaint.status !== 'resolved' ? `
+                                <div class="mt-6 pt-6 border-t border-border">
+                                    <button type="button" class="btn-primary w-full" data-complaint-id="${complaint.id}" id="add-update-btn-${complaint.id}">
+                                        <span class="flex items-center justify-center gap-2">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                                            </svg>
+                                            Add Update/Comment
+                                        </span>
+                                    </button>
+                                </div>
+                            ` : ''}
+                        </div>
+                    `;
+                } else {
+                    content.innerHTML = '<p class="text-text-secondary text-center py-8">Failed to load complaint details.</p>';
+                }
+                
+                // Attach event listeners to dynamically created buttons
+                setTimeout(() => {
+                    const addUpdateBtn = document.querySelector('[data-complaint-id]');
+                    if (addUpdateBtn) {
+                        const complaintId = addUpdateBtn.getAttribute('data-complaint-id');
+                        addUpdateBtn.addEventListener('click', function() {
+                            addUpdate(parseInt(complaintId));
+                        });
+                    }
+                }, 100);
+            } catch (error) {
+                console.error('View complaint details error:', error);
+                content.innerHTML = '<p class="text-text-secondary text-center py-8">Error loading complaint details. Please try again.</p>';
+            }
+        }
+
+        function closeComplaintDetails() {
+            const modal = document.getElementById('complaint-details-modal');
+            if (modal) modal.classList.add('hidden');
+        }
+
+        function createComplaintDetailsModal() {
+            // Check if modal already exists
+            if (document.getElementById('complaint-details-modal')) return;
+
+            const modal = document.createElement('div');
+            modal.id = 'complaint-details-modal';
+            modal.className = 'hidden fixed inset-0 z-50 flex items-center justify-center p-4';
+            modal.style.background = 'rgba(0, 0, 0, 0.5)';
+            modal.innerHTML = `
+                <div class="bg-surface rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] flex flex-col">
+                    <div class="bg-gradient-to-r from-primary-600 to-primary-700 px-6 py-4 rounded-t-xl flex-shrink-0">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <h2 class="text-xl font-bold text-white">Complaint Details</h2>
+                                <p class="text-sm text-primary-100 mt-0.5" id="details-tracking-number">Loading...</p>
+                            </div>
+                            <button type="button" onclick="closeComplaintDetails()" class="text-white hover:bg-white hover:bg-opacity-20 rounded-full p-1.5 transition-colors" aria-label="Close modal">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="overflow-y-auto flex-1 p-6">
+                        <div id="complaint-details-content">
+                            <div class="flex items-center justify-center py-12">
+                                <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            
+            // Close on outside click
+            modal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeComplaintDetails();
+                }
+            });
+        }
+
+        function rateResolution(complaintId) {
+            alert('Rate resolution for complaint #' + complaintId);
+        }
+
+        // Make addUpdate globally accessible
+        window.addUpdate = function(complaintId) {
+            console.log('addUpdate called with complaintId:', complaintId);
+            const modal = document.getElementById('add-update-modal');
+            const complaintIdInput = document.getElementById('update-complaint-id');
+            const updateMessage = document.getElementById('update-message');
+            
+            if (!modal) {
+                console.error('Add update modal not found in DOM');
+                alert('Update modal not found. Please refresh the page.');
+                return;
+            }
+            
+            if (complaintIdInput) {
+                complaintIdInput.value = complaintId;
+                console.log('Set complaint ID to:', complaintId);
+            } else {
+                console.error('update-complaint-id input not found');
+            }
+            
+            if (updateMessage) {
+                updateMessage.value = '';
+            }
+            
+            modal.classList.remove('hidden');
+            console.log('Modal should now be visible');
+        };
+
+        // Make closeAddUpdateModal globally accessible
+        function closeAddUpdateModal() {
+            const modal = document.getElementById('add-update-modal');
+            if (modal) modal.classList.add('hidden');
+        }
+        window.closeAddUpdateModal = closeAddUpdateModal;
+
+        // Make submitUpdate globally accessible
+        async function submitUpdate() {
+            const complaintId = document.getElementById('update-complaint-id').value;
+            const message = document.getElementById('update-message').value.trim();
+            const submitBtn = document.getElementById('submit-update-btn');
+
+            if (!message) {
+                alert('Please enter an update message');
+                return;
+            }
+
+            const originalText = submitBtn.textContent;
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Submitting...';
+
+            try {
+                const { data } = await apiRequest(`/complaints/${complaintId}/updates`, {
+                    method: 'POST',
+                    body: JSON.stringify({ message })
+                });
+
+                if (data.success) {
+                    alert('Update added successfully!');
+                    closeAddUpdateModal();
+                    // Refresh complaints and details if modal is open
+                    const detailsModal = document.getElementById('complaint-details-modal');
+                    if (detailsModal && !detailsModal.classList.contains('hidden')) {
+                        // Reload details if viewing
+                        const currentComplaintId = document.getElementById('update-complaint-id').value;
+                        if (currentComplaintId) {
+                            await viewDetails(parseInt(currentComplaintId));
+                        }
+                    }
+                    // Reload complaints list
+                    await loadMyComplaints();
+                } else {
+                    alert(data.message || 'Failed to add update');
+                }
+            } catch (error) {
+                console.error('Add update error:', error);
+                handleApiError(error, 'Failed to add update');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalText;
+            }
+        }
+
+        // Export functionality
+        document.getElementById('export-btn').addEventListener('click', async function() {
+            const exportBtn = this;
+            const originalText = exportBtn.innerHTML;
+            exportBtn.disabled = true;
+            exportBtn.innerHTML = '<svg class="w-4 h-4 mr-2 inline animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>Exporting...';
+
+            try {
+                const token = getToken();
+                const API_BASE_URL = 'http://localhost:3000/api';
+                const response = await fetch(`${API_BASE_URL}/complaints/export`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (response.ok) {
+                    const blob = await response.blob();
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `complaints_export_${new Date().toISOString().split('T')[0]}.csv`;
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                    document.body.removeChild(a);
+                } else {
+                    const data = await response.json();
+                    alert(data.message || 'Failed to export complaints');
+                }
+            } catch (error) {
+                console.error('Export error:', error);
+                alert('Failed to export complaints. Please try again.');
+            } finally {
+                exportBtn.disabled = false;
+                exportBtn.innerHTML = originalText;
+            }
         });
+
+        // Real-time updates tracking
+        let lastUpdateId = 0;
+        let updateInterval = null;
+        let complaintInterval = null;
+
+        // Load real-time updates
+        async function loadRealtimeUpdates() {
+            try {
+                const { data } = await apiRequest(`/complaints/updates?lastUpdateId=${lastUpdateId}`);
+                
+                if (data.success && data.data.updates.length > 0) {
+                    const updates = data.data.updates;
+                    lastUpdateId = data.data.latestUpdateId;
+                    
+                    // Display new updates
+                    displayUpdates(updates);
+                    
+                    // Refresh complaints if there are status changes
+                    const hasStatusChange = updates.some(u => u.update_type === 'status_change');
+                    if (hasStatusChange) {
+                        loadMyComplaints();
+                    }
+                }
+            } catch (error) {
+                console.error('Load updates error:', error);
+                // Don't show error to user for background polling
+            }
+        }
+
+        // Display updates
+        function displayUpdates(updates) {
+            const container = document.getElementById('updates-list');
+            const section = document.getElementById('realtime-updates-section');
+            
+            if (!container || !section) return;
+
+            // Show section if hidden
+            section.classList.remove('hidden');
+
+            // Prepend new updates
+            updates.reverse().forEach(update => {
+                const updateEl = createUpdateElement(update);
+                container.insertBefore(updateEl, container.firstChild);
+            });
+
+            // Limit to 10 most recent updates
+            while (container.children.length > 10) {
+                container.removeChild(container.lastChild);
+            }
+
+            // Add animation for new updates
+            container.querySelectorAll('.update-item').forEach((el, index) => {
+                if (index < updates.length) {
+                    el.style.animation = 'slideIn 0.3s ease-out';
+                }
+            });
+        }
+
+        // Create update element
+        function createUpdateElement(update) {
+            const updateTypeIcons = {
+                'status_change': '<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>',
+                'assignment': '<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20a3 3 0 01-3-3v-2a3 3 0 013-3h4a3 3 0 013 3v2a3 3 0 01-3 3z"/></svg>',
+                'comment': '<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>',
+                'resolution': '<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>'
+            };
+
+            const updateTypeColors = {
+                'status_change': 'text-primary',
+                'assignment': 'text-secondary',
+                'comment': 'text-warning',
+                'resolution': 'text-secondary'
+            };
+
+            const timeAgo = getTimeAgo(new Date(update.created_at));
+            const icon = updateTypeIcons[update.update_type] || updateTypeIcons['status_change'];
+            const color = updateTypeColors[update.update_type] || 'text-primary';
+
+            return Object.assign(document.createElement('div'), {
+                className: 'update-item bg-white rounded-lg p-3 shadow-sm border-l-2 border-primary',
+                innerHTML: `
+                    <div class="flex items-start gap-3">
+                        <div class="${color} mt-0.5">${icon}</div>
+                        <div class="flex-1">
+                            <div class="text-sm font-medium text-text-primary">${update.complaint_title || 'Complaint Update'}</div>
+                            <div class="text-xs text-text-secondary mt-1">${update.message || `${update.old_value} → ${update.new_value}`}</div>
+                            <div class="text-xs text-text-secondary mt-1">${timeAgo}</div>
+                        </div>
+                    </div>
+                `
+            });
+        }
+
+        // Clear updates
+        function clearUpdates() {
+            const container = document.getElementById('updates-list');
+            const section = document.getElementById('realtime-updates-section');
+            if (container) container.innerHTML = '';
+            if (section) section.classList.add('hidden');
+        }
+
+        // Get time ago string
+        function getTimeAgo(date) {
+            const now = new Date();
+            const diffMs = now - date;
+            const diffMins = Math.floor(diffMs / 60000);
+            const diffHours = Math.floor(diffMs / 3600000);
+            const diffDays = Math.floor(diffMs / 86400000);
+
+            if (diffMins < 1) return 'just now';
+            if (diffMins < 60) return `${diffMins} minute${diffMins > 1 ? 's' : ''} ago`;
+            if (diffHours < 24) return `${diffHours} hour${diffHours > 1 ? 's' : ''} ago`;
+            if (diffDays < 7) return `${diffDays} day${diffDays > 1 ? 's' : ''} ago`;
+            return date.toLocaleDateString();
+        }
+
+        // Start real-time polling
+        function startRealtimePolling() {
+            // Poll for updates every 5 seconds
+            updateInterval = setInterval(() => {
+                if (isLoggedIn()) {
+                    loadRealtimeUpdates();
+                }
+            }, 5000);
+
+            // Refresh complaints every 30 seconds
+            complaintInterval = setInterval(() => {
+                if (isLoggedIn()) {
+                    loadMyComplaints();
+                }
+            }, 30000);
+
+            // Initial load
+            loadRealtimeUpdates();
+        }
+
+        // Stop polling when page is hidden
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                if (updateInterval) clearInterval(updateInterval);
+                if (complaintInterval) clearInterval(complaintInterval);
+            } else {
+                startRealtimePolling();
+            }
+        });
+
+        // Start polling after initial load
+        setTimeout(() => {
+            startRealtimePolling();
+        }, 2000);
 
         // Touch gestures for mobile (swipe to refresh)
         let startY = 0;
@@ -543,10 +1283,189 @@
             endY = e.changedTouches[0].clientY;
             if (startY - endY > 50 && window.scrollY === 0) {
                 // Swipe down to refresh
-                location.reload();
+                loadMyComplaints();
+                loadRealtimeUpdates();
             }
         });
+
+        // Add CSS animation for updates
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from {
+                    opacity: 0;
+                    transform: translateX(-10px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+            }
+            .update-item {
+                animation: slideIn 0.3s ease-out;
+            }
+        `;
+        document.head.appendChild(style);
     </script>
+
+    <!-- Profile Edit Modal -->
+    <div id="profile-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4" style="background: transparent;">
+        <div class="bg-surface rounded-xl shadow-2xl max-w-md w-full border border-border max-h-[90vh] flex flex-col">
+            <!-- Header with gradient -->
+            <div class="bg-gradient-to-r from-primary-600 to-primary-700 px-6 py-4 rounded-t-xl flex-shrink-0">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h2 class="text-xl font-bold text-white">Edit Profile</h2>
+                        <p class="text-sm text-primary-100 mt-0.5">Update your personal information</p>
+                    </div>
+                    <button type="button" onclick="closeProfileModal()" class="text-white hover:bg-white hover:bg-opacity-20 rounded-full p-1.5 transition-colors" aria-label="Close modal">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Scrollable form content -->
+            <div class="overflow-y-auto flex-1">
+                <form id="profile-form" enctype="multipart/form-data" class="p-6">
+                    <!-- Profile Picture Section -->
+                    <div class="mb-6 text-center">
+                        <div class="relative inline-block group">
+                            <div class="absolute inset-0 rounded-full bg-primary opacity-0 group-hover:opacity-10 transition-opacity"></div>
+                            <img id="profile-preview" src="https://ui-avatars.com/api/?name=User&background=0078D7&color=fff&size=128&bold=true" alt="Profile Preview" class="w-28 h-28 rounded-full object-cover border-4 border-primary shadow-lg mx-auto bg-primary" />
+                            <label for="profile-picture-input" class="absolute bottom-0 right-0 bg-primary text-white rounded-full p-2.5 cursor-pointer hover:bg-primary-700 shadow-lg hover:shadow-xl transition-all transform hover:scale-110" aria-label="Change profile picture">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                </svg>
+                            </label>
+                            <input type="file" id="profile-picture-input" name="profile_picture" accept="image/*" class="hidden" />
+                        </div>
+                        <p class="text-xs text-text-secondary mt-3 font-medium">Click camera icon to upload</p>
+                        <p class="text-xs text-text-secondary mt-1">Max 5MB • JPG, PNG, GIF, WEBP</p>
+                    </div>
+
+                    <!-- Divider -->
+                    <div class="border-t border-border mb-6"></div>
+
+                    <!-- Form Fields -->
+                    <div class="space-y-4">
+                        <!-- Full Name -->
+                        <div>
+                            <label for="profile-fullname" class="block text-sm font-semibold text-text-primary mb-2">
+                                Full Name <span class="text-primary">*</span>
+                            </label>
+                            <input type="text" id="profile-fullname" name="fullname" class="input-field w-full focus:ring-2 focus:ring-primary focus:border-primary transition-all" required placeholder="Enter your full name" />
+                        </div>
+
+                        <!-- Email (read-only) -->
+                        <div>
+                            <label for="profile-email" class="block text-sm font-semibold text-text-primary mb-2">
+                                Email Address
+                            </label>
+                            <input type="email" id="profile-email" class="input-field w-full bg-border-light cursor-not-allowed opacity-75" readonly />
+                            <p class="text-xs text-text-secondary mt-1.5">Email cannot be changed</p>
+                        </div>
+
+                        <!-- Agency (read-only for agency users) -->
+                        <div id="profile-agency-section" style="display: none;">
+                            <label for="profile-agency" class="block text-sm font-semibold text-text-primary mb-2">
+                                Agency
+                            </label>
+                            <input type="text" id="profile-agency" class="input-field w-full bg-border-light cursor-not-allowed opacity-75" readonly />
+                            <p class="text-xs text-text-secondary mt-1.5">Agency assignment is managed by administrators</p>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Sticky Action Buttons -->
+            <div class="flex gap-3 p-6 pt-4 border-t border-border bg-surface rounded-b-xl flex-shrink-0">
+                <button type="button" onclick="closeProfileModal()" class="btn-outline flex-1 font-medium hover:bg-border transition-colors">
+                    Cancel
+                </button>
+                <button type="submit" form="profile-form" class="btn-primary flex-1 font-semibold shadow-lg hover:shadow-xl transition-all" id="profile-save-btn">
+                    <span class="flex items-center justify-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                        </svg>
+                        Save Changes
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Update Modal -->
+    <div id="add-update-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4" style="background: rgba(0, 0, 0, 0.5);">
+        <div class="bg-surface rounded-xl shadow-2xl max-w-md w-full">
+            <div class="bg-gradient-to-r from-primary-600 to-primary-700 px-6 py-4 rounded-t-xl">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h2 class="text-xl font-bold text-white">Add Update</h2>
+                        <p class="text-sm text-primary-100 mt-0.5">Share additional information about your complaint</p>
+                    </div>
+                    <button type="button" onclick="closeAddUpdateModal()" class="text-white hover:bg-white hover:bg-opacity-20 rounded-full p-1.5 transition-colors" aria-label="Close modal">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div class="p-6">
+                <input type="hidden" id="update-complaint-id" />
+                <div class="mb-4">
+                    <label for="update-message" class="block text-sm font-semibold text-text-primary mb-2">
+                        Update Message <span class="text-primary">*</span>
+                    </label>
+                    <textarea id="update-message" rows="5" class="input-field w-full resize-none" placeholder="Enter your update or comment about this complaint..." required></textarea>
+                    <p class="text-xs text-text-secondary mt-1">This update will be visible in the complaint history</p>
+                </div>
+                <div class="flex gap-3">
+                    <button type="button" onclick="closeAddUpdateModal()" class="btn-outline flex-1">Cancel</button>
+                    <button type="button" onclick="submitUpdate()" class="btn-primary flex-1" id="submit-update-btn">
+                        <span class="flex items-center justify-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                            </svg>
+                            Add Update
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Complaint Details Modal -->
+    <div id="complaint-details-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4" style="background: rgba(0, 0, 0, 0.5);">
+        <div class="bg-surface rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] flex flex-col">
+            <!-- Header -->
+            <div class="bg-gradient-to-r from-primary-600 to-primary-700 px-6 py-4 rounded-t-xl flex-shrink-0">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h2 class="text-xl font-bold text-white">Complaint Details</h2>
+                        <p class="text-sm text-primary-100 mt-0.5" id="details-tracking-number">Loading...</p>
+                    </div>
+                    <button type="button" onclick="closeComplaintDetails()" class="text-white hover:bg-white hover:bg-opacity-20 rounded-full p-1.5 transition-colors" aria-label="Close modal">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Scrollable Content -->
+            <div class="overflow-y-auto flex-1 p-6">
+                <div id="complaint-details-content">
+                    <div class="flex items-center justify-center py-12">
+                        <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 <script id="dhws-dataInjector" src="../public/dhws-data-injector.js"></script>
 </body>
 </html>

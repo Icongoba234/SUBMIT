@@ -32,12 +32,19 @@
                     <a href="track_progress.html" class="text-text-secondary hover:text-primary transition-colors">Track Progress</a>
                     <a href="public_transparency_hub.html" class="text-text-secondary hover:text-primary transition-colors">Public Hub</a>
                     <a href="community_forum.html" class="text-text-secondary hover:text-primary transition-colors">Community</a>
-                    <a href="login.html" class="btn-outline text-sm py-2 px-4">Agency Login</a>
+                    <span id="auth-links" class="flex items-center gap-3">
+                        <a href="login.html" class="btn-outline text-sm py-2 px-4" id="login-link">Login / Agency Login</a>
+                        <div id="profile-section" class="hidden flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity" onclick="openProfileModal()">
+                            <img id="profile-picture" src="" alt="Profile Picture" class="w-8 h-8 rounded-full object-cover border-2 border-primary" />
+                            <span id="user-name" class="text-sm font-semibold text-text-primary"></span>
+                        </div>
+                        <button type="button" onclick="logout()" class="btn-outline text-sm py-2 px-4 hidden" id="logout-btn">Logout</button>
+                    </span>
                 </div>
                 
                 <!-- Mobile Menu Button -->
                 <div class="md:hidden">
-                    <button id="mobile-menu-button" class="text-text-secondary hover:text-primary">
+                    <button id="mobile-menu-button" class="text-text-secondary hover:text-primary" aria-label="Toggle mobile menu">
                         <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
                         </svg>
@@ -99,6 +106,30 @@
                 <div class="text-sm text-text-secondary">
                     <span id="progress-text">Step 1 of 4</span>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- My Complaints Section (if logged in) -->
+    <section id="my-complaints-section" class="py-8 bg-background hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-text-primary">My Submitted Complaints</h2>
+                <button type="button" onclick="loadMyComplaints()" class="btn-outline text-sm" aria-label="Refresh complaints">
+                    <svg class="w-4 h-4 mr-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                    </svg>
+                    Refresh
+                </button>
+            </div>
+            <div id="complaints-list" class="space-y-4">
+                <!-- Complaints will be loaded here -->
+            </div>
+            <div id="no-complaints" class="text-center py-12 hidden">
+                <svg class="w-16 h-16 text-text-secondary mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                </svg>
+                <p class="text-text-secondary">You haven't submitted any complaints yet.</p>
             </div>
         </div>
     </section>
@@ -221,7 +252,7 @@
                     <div class="space-y-6">
                         <div class="grid md:grid-cols-2 gap-6">
                             <div>
-                                <label class="block text-sm font-semibold text-text-primary mb-2">Priority Level *</label>
+                                <label for="priority-level" class="block text-sm font-semibold text-text-primary mb-2">Priority Level *</label>
                                 <select id="priority-level" class="input-field" required>
                                     <option value>Select priority level</option>
                                     <option value="low">Low - General Concern</option>
@@ -232,7 +263,7 @@
                             </div>
                             
                             <div>
-                                <label class="block text-sm font-semibold text-text-primary mb-2">Affected Area</label>
+                                <label for="affected-area" class="block text-sm font-semibold text-text-primary mb-2">Affected Area</label>
                                 <select id="affected-area" class="input-field">
                                     <option value>Select area type</option>
                                     <option value="residential">Residential Area</option>
@@ -248,7 +279,7 @@
                             <label class="block text-sm font-semibold text-text-primary mb-2">Location *</label>
                             <div class="relative">
                                 <input type="text" id="location-input" placeholder="Enter street address, intersection, or landmark" class="input-field pr-12" required />
-                                <button type="button" id="use-current-location" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-primary hover:text-primary-700">
+                                <button type="button" id="use-current-location" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-primary hover:text-primary-700" aria-label="Use current location">
                                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                                         <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
                                     </svg>
@@ -325,7 +356,8 @@
                                     </button>
                                 </div>
                             </div>
-                            <input type="file" id="file-input" multiple accept="image/*,video/*" class="hidden" />
+                            <label for="file-input" class="sr-only">Upload files</label>
+                            <input type="file" id="file-input" multiple accept="image/*,video/*" class="hidden" aria-label="Upload files" />
                         </div>
                         
                         <!-- File Preview Area -->
@@ -429,7 +461,7 @@
                                     <input type="tel" id="contact-phone" placeholder="(555) 123-4567" class="input-field" />
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-semibold text-text-primary mb-2">Preferred Contact Method</label>
+                                    <label for="contact-method" class="block text-sm font-semibold text-text-primary mb-2">Preferred Contact Method</label>
                                     <select id="contact-method" class="input-field">
                                         <option value="email">Email</option>
                                         <option value="phone">Phone</option>
@@ -496,8 +528,78 @@
             </div>
             <p class="text-sm text-text-secondary mb-6">You'll receive email updates as your complaint progresses. Expected response time: 2-5 business days.</p>
             <div class="flex flex-col sm:flex-row gap-3">
-                <a href="track_progress.html" class="btn-primary flex-1">Track Progress</a>
-                <a href="homepage.html" class="btn-outline flex-1">Return Home</a>
+                <button type="button" onclick="viewComplaintDetails(lastSubmittedComplaintId)" class="btn-primary flex-1">View Details</button>
+                <a href="track_progress.html" class="btn-outline flex-1 text-center">Track Progress</a>
+                <button type="button" onclick="closeSuccessModal()" class="btn-outline flex-1">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Update Modal -->
+    <div id="add-update-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4" style="background: rgba(0, 0, 0, 0.5);">
+        <div class="bg-surface rounded-xl shadow-2xl max-w-md w-full">
+            <div class="bg-gradient-to-r from-primary-600 to-primary-700 px-6 py-4 rounded-t-xl">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h2 class="text-xl font-bold text-white">Add Update</h2>
+                        <p class="text-sm text-primary-100 mt-0.5">Share additional information about your complaint</p>
+                    </div>
+                    <button type="button" onclick="closeAddUpdateModal()" class="text-white hover:bg-white hover:bg-opacity-20 rounded-full p-1.5 transition-colors" aria-label="Close modal">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div class="p-6">
+                <input type="hidden" id="update-complaint-id" />
+                <div class="mb-4">
+                    <label for="update-message" class="block text-sm font-semibold text-text-primary mb-2">
+                        Update Message <span class="text-primary">*</span>
+                    </label>
+                    <textarea id="update-message" rows="5" class="input-field w-full resize-none" placeholder="Enter your update or comment about this complaint..." required></textarea>
+                    <p class="text-xs text-text-secondary mt-1">This update will be visible in the complaint history</p>
+                </div>
+                <div class="flex gap-3">
+                    <button type="button" onclick="closeAddUpdateModal()" class="btn-outline flex-1">Cancel</button>
+                    <button type="button" onclick="submitUpdate()" class="btn-primary flex-1" id="submit-update-btn">
+                        <span class="flex items-center justify-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                            </svg>
+                            Add Update
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Complaint Details Modal -->
+    <div id="complaint-details-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4" style="background: rgba(0, 0, 0, 0.5);">
+        <div class="bg-surface rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] flex flex-col">
+            <!-- Header -->
+            <div class="bg-gradient-to-r from-primary-600 to-primary-700 px-6 py-4 rounded-t-xl flex-shrink-0">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h2 class="text-xl font-bold text-white">Complaint Details</h2>
+                        <p class="text-sm text-primary-100 mt-0.5" id="details-tracking-number">Loading...</p>
+                    </div>
+                    <button type="button" onclick="closeComplaintDetails()" class="text-white hover:bg-white hover:bg-opacity-20 rounded-full p-1.5 transition-colors" aria-label="Close modal">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Scrollable Content -->
+            <div class="overflow-y-auto flex-1 p-6">
+                <div id="complaint-details-content">
+                    <div class="flex items-center justify-center py-12">
+                        <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -865,8 +967,15 @@
         }
 
         // Form submission
-        document.getElementById('complaint-form').addEventListener('submit', function(e) {
+        document.getElementById('complaint-form').addEventListener('submit', async function(e) {
             e.preventDefault();
+            
+            // Check if user is logged in
+            if (!isLoggedIn()) {
+                alert('Please login to submit a complaint');
+                window.location.href = 'login.html';
+                return;
+            }
             
             const privacyAgreed = document.getElementById('privacy-agreement').checked;
             if (!privacyAgreed) {
@@ -882,15 +991,81 @@
                 method: document.getElementById('contact-method').value
             };
             
-            // Generate tracking number
-            const trackingNumber = 'CV-2025-' + Math.floor(Math.random() * 900000 + 100000);
+            // Disable submit button
+            const submitBtn = document.getElementById('submit-complaint');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<svg class="w-5 h-5 mr-2 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>Submitting...';
+            
+            try {
+                // Create FormData for file upload
+                const submitFormData = new FormData();
+                submitFormData.append('title', formData.title);
+                submitFormData.append('description', formData.description);
+                submitFormData.append('category', formData.category || '');
+                submitFormData.append('priority', formData.priority || 'medium');
+                submitFormData.append('location', formData.location || '');
+                submitFormData.append('affected_area', document.getElementById('affected-area')?.value || '');
+
+                // Add files
+                if (formData.files && formData.files.length > 0) {
+                    formData.files.forEach(file => {
+                        submitFormData.append('files', file);
+                    });
+                }
+
+                // Submit to backend API with FormData
+                const token = getToken();
+                const API_BASE_URL = 'http://localhost:3000/api';
+                const response = await fetch(`${API_BASE_URL}/complaints`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: submitFormData
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    // Store complaint ID for viewing details
+                    lastSubmittedComplaintId = data.data.complaint.id;
+                    
+                    // Use tracking number from response or generate one
+                    const trackingNumber = data.data.complaint.tracking_number || ('CV-2025-' + lastSubmittedComplaintId.toString().padStart(6, '0'));
             document.getElementById('tracking-number').textContent = trackingNumber;
             
             // Show success modal
             document.getElementById('success-modal').classList.remove('hidden');
             
-            // In a real app, you would submit the form data to the server here
-            console.log('Form submitted:', formData);
+                    // Clear form and draft
+                    document.getElementById('complaint-form').reset();
+                    localStorage.removeItem('complaint-draft');
+                    formData = {
+                        category: '',
+                        priority: '',
+                        location: '',
+                        title: '',
+                        description: '',
+                        files: [],
+                        contact: {}
+                    };
+                    
+                    // Reload complaints list if logged in
+                    if (isLoggedIn()) {
+                        await loadMyComplaints();
+                    }
+                } else {
+                    alert(data.message || 'Failed to submit complaint');
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalText;
+                }
+            } catch (error) {
+                console.error('Submit complaint error:', error);
+                handleApiError(error, 'An error occurred while submitting your complaint. Please try again.');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+            }
         });
 
         // Auto-save functionality
@@ -932,7 +1107,523 @@
 
         // Initialize form
         showStep(1);
+
+        // My Complaints Management
+        let lastSubmittedComplaintId = null;
+        let myComplaints = [];
+        let lastUpdateId = 0;
+
+        // Load my complaints on page load if logged in
+        if (isLoggedIn()) {
+            const myComplaintsSection = document.getElementById('my-complaints-section');
+            if (myComplaintsSection) {
+                myComplaintsSection.classList.remove('hidden');
+                loadMyComplaints();
+                // Start real-time updates polling
+                startRealtimeUpdates();
+            }
+        }
+
+        async function loadMyComplaints() {
+            try {
+                const { data } = await apiRequest('/complaints/my');
+                if (data.success) {
+                    myComplaints = data.data.complaints;
+                    displayComplaints(myComplaints);
+                }
+            } catch (error) {
+                console.error('Load complaints error:', error);
+                const noComplaints = document.getElementById('no-complaints');
+                if (noComplaints) noComplaints.classList.remove('hidden');
+            }
+        }
+
+        function displayComplaints(complaints) {
+            const listEl = document.getElementById('complaints-list');
+            const noComplaints = document.getElementById('no-complaints');
+            
+            if (!listEl) return;
+
+            if (complaints.length === 0) {
+                listEl.innerHTML = '';
+                if (noComplaints) noComplaints.classList.remove('hidden');
+                return;
+            }
+
+            if (noComplaints) noComplaints.classList.add('hidden');
+
+            listEl.innerHTML = complaints.map(complaint => {
+                const statusClass = {
+                    'pending': 'bg-accent text-white',
+                    'in_review': 'bg-warning text-white',
+                    'resolved': 'bg-secondary text-white'
+                }[complaint.status] || 'bg-border text-text-secondary';
+                
+                const statusText = {
+                    'pending': 'Pending',
+                    'in_review': 'In Review',
+                    'resolved': 'Resolved'
+                }[complaint.status] || complaint.status;
+
+                const createdDate = new Date(complaint.created_at).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+
+                const complaintId = complaint.tracking_number || ('CV-2025-' + complaint.id.toString().padStart(6, '0'));
+
+                return `
+                    <div class="card hover:shadow-lg transition-shadow">
+                        <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-3 mb-2">
+                                    <h3 class="text-lg font-semibold text-text-primary">${complaint.title || 'Untitled'}</h3>
+                                    <span class="px-2 py-1 rounded-full text-xs font-semibold ${statusClass}">${statusText}</span>
+                                </div>
+                                <p class="text-text-secondary text-sm mb-3 line-clamp-2">${complaint.description || 'No description'}</p>
+                                <div class="flex items-center gap-4 text-xs text-text-secondary">
+                                    <span>Tracking: <span class="font-mono font-semibold">${complaintId}</span></span>
+                                    ${complaint.agency_name ? `<span>Assigned to: ${complaint.agency_name}</span>` : '<span class="text-accent">Unassigned</span>'}
+                                    <span>Submitted: ${createdDate}</span>
+                                </div>
+                            </div>
+                            <button type="button" onclick="viewComplaintDetails(${complaint.id})" class="btn-outline text-sm whitespace-nowrap">
+                                View Details
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        async function viewComplaintDetails(complaintId) {
+            const modal = document.getElementById('complaint-details-modal');
+            const content = document.getElementById('complaint-details-content');
+            
+            if (!modal || !content) return;
+
+            modal.classList.remove('hidden');
+            content.innerHTML = '<div class="flex items-center justify-center py-12"><div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div></div>';
+
+            try {
+                const { data } = await apiRequest(`/complaints/${complaintId}`);
+                
+                if (data.success) {
+                    const complaint = data.data.complaint;
+                    const trackingNumber = complaint.tracking_number || ('CV-2025-' + complaint.id.toString().padStart(6, '0'));
+                    
+                    document.getElementById('details-tracking-number').textContent = trackingNumber;
+
+                    const statusClass = {
+                        'pending': 'bg-accent text-white',
+                        'in_review': 'bg-warning text-white',
+                        'resolved': 'bg-secondary text-white'
+                    }[complaint.status] || 'bg-border text-text-secondary';
+                    
+                    const statusText = {
+                        'pending': 'Pending',
+                        'in_review': 'In Review',
+                        'resolved': 'Resolved'
+                    }[complaint.status] || complaint.status;
+
+                    const createdDate = new Date(complaint.created_at).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    });
+
+                    // Files/Images display
+                    const filesHtml = complaint.files && complaint.files.length > 0 ? `
+                        <div class="mt-6">
+                            <h3 class="text-lg font-semibold text-text-primary mb-4">Submitted Images/Evidence</h3>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                                ${complaint.files.map(file => {
+                                    const API_BASE = 'http://localhost:3000';
+                                    const fileUrl = file.file_path.startsWith('/') ? `${API_BASE}${file.file_path}` : `${API_BASE}/${file.file_path}`;
+                                    const isImage = file.file_type && file.file_type.startsWith('image/');
+                                    const isVideo = file.file_type && file.file_type.startsWith('video/');
+                                    
+                                    return `
+                                        <div class="bg-background rounded-lg p-3 border border-border hover:shadow-lg transition-shadow">
+                                            ${isImage ? `
+                                                <img src="${fileUrl}" alt="${file.file_name}" class="w-full h-48 object-cover rounded-lg mb-2 cursor-pointer" onclick="window.open('${fileUrl}', '_blank')" />
+                                            ` : isVideo ? `
+                                                <video src="${fileUrl}" class="w-full h-48 object-cover rounded-lg mb-2" controls></video>
+                                            ` : `
+                                                <div class="w-full h-48 bg-border-light rounded-lg mb-2 flex items-center justify-center">
+                                                    <svg class="w-12 h-12 text-text-secondary" fill="currentColor" viewBox="0 0 24 24">
+                                                        <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z"/>
+                                                        <path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/>
+                                                    </svg>
+                                                </div>
+                                            `}
+                                            <p class="text-xs text-text-secondary truncate" title="${file.file_name}">${file.file_name}</p>
+                                            <p class="text-xs text-text-secondary">${(file.file_size / 1024 / 1024).toFixed(2)} MB</p>
+                                        </div>
+                                    `;
+                                }).join('')}
+                            </div>
+                        </div>
+                    ` : '';
+
+                    const updatesHtml = complaint.updates && complaint.updates.length > 0 ? `
+                        <div class="mt-6">
+                            <h3 class="text-lg font-semibold text-text-primary mb-4">Update History</h3>
+                            <div class="space-y-3">
+                                ${complaint.updates.map(update => {
+                                    const updateDate = new Date(update.created_at).toLocaleDateString('en-US', {
+                                        year: 'numeric',
+                                        month: 'short',
+                                        day: 'numeric',
+                                        hour: '2-digit',
+                                        minute: '2-digit'
+                                    });
+                                    
+                                    const updateTypeText = {
+                                        'status_change': 'Status Changed',
+                                        'assignment': 'Assignment',
+                                        'comment': 'Comment',
+                                        'resolution': 'Resolution'
+                                    }[update.update_type] || update.update_type;
+
+                                    return `
+                                        <div class="bg-background rounded-lg p-4 border-l-4 border-primary">
+                                            <div class="flex justify-between items-start mb-2">
+                                                <span class="text-sm font-semibold text-text-primary">${updateTypeText}</span>
+                                                <span class="text-xs text-text-secondary">${updateDate}</span>
+                                            </div>
+                                            ${update.old_value && update.new_value ? `
+                                                <p class="text-sm text-text-secondary mb-1">
+                                                    Changed from <span class="font-semibold">${update.old_value}</span> to <span class="font-semibold">${update.new_value}</span>
+                                                </p>
+                                            ` : ''}
+                                            ${update.message ? `<p class="text-sm text-text-primary mt-2">${update.message}</p>` : ''}
+                                        </div>
+                                    `;
+                                }).join('')}
+                            </div>
+                        </div>
+                    ` : '<p class="text-text-secondary text-sm mt-4">No updates yet.</p>';
+
+                    // Additional details
+                    const additionalDetailsHtml = `
+                        <div class="grid md:grid-cols-2 gap-4 mt-6">
+                            ${complaint.category ? `
+                                <div class="bg-background rounded-lg p-4">
+                                    <h5 class="text-sm font-semibold text-text-secondary mb-1">Category</h5>
+                                    <p class="text-text-primary">${complaint.category.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</p>
+                                </div>
+                            ` : ''}
+                            ${complaint.priority ? `
+                                <div class="bg-background rounded-lg p-4">
+                                    <h5 class="text-sm font-semibold text-text-secondary mb-1">Priority</h5>
+                                    <p class="text-text-primary capitalize">${complaint.priority}</p>
+                                </div>
+                            ` : ''}
+                            ${complaint.location ? `
+                                <div class="bg-background rounded-lg p-4 md:col-span-2">
+                                    <h5 class="text-sm font-semibold text-text-secondary mb-1">Location</h5>
+                                    <p class="text-text-primary">${complaint.location}</p>
+                                </div>
+                            ` : ''}
+                        </div>
+                    `;
+
+                    content.innerHTML = `
+                        <div class="space-y-6">
+                            <div class="flex items-center justify-between">
+                                <span class="px-4 py-2 rounded-full text-sm font-semibold ${statusClass}">${statusText}</span>
+                                <span class="text-sm text-text-secondary">Submitted: ${createdDate}</span>
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-bold text-text-primary mb-2">${complaint.title || 'Untitled Complaint'}</h3>
+                                <p class="text-text-secondary">Tracking Number: <span class="font-mono font-semibold text-primary">${complaint.tracking_number || trackingNumber}</span></p>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-semibold text-text-primary mb-2">Description</h4>
+                                <p class="text-text-secondary whitespace-pre-wrap">${complaint.description || 'No description provided'}</p>
+                            </div>
+                            ${additionalDetailsHtml}
+                            ${filesHtml}
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div class="bg-background rounded-lg p-4">
+                                    <h5 class="text-sm font-semibold text-text-secondary mb-1">Submitted By</h5>
+                                    <p class="text-text-primary">${complaint.user_name || 'Anonymous'}</p>
+                                    <p class="text-sm text-text-secondary">${complaint.user_email || ''}</p>
+                                </div>
+                                ${complaint.agency_name ? `
+                                    <div class="bg-background rounded-lg p-4">
+                                        <h5 class="text-sm font-semibold text-text-secondary mb-1">Assigned Agency</h5>
+                                        <p class="text-text-primary">${complaint.agency_name}</p>
+                                        ${complaint.agency_email ? `<p class="text-sm text-text-secondary">${complaint.agency_email}</p>` : ''}
+                                    </div>
+                                ` : `
+                                    <div class="bg-background rounded-lg p-4">
+                                        <h5 class="text-sm font-semibold text-text-secondary mb-1">Assigned Agency</h5>
+                                        <p class="text-accent">Not yet assigned</p>
+                                    </div>
+                                `}
+                            </div>
+                            ${updatesHtml}
+                            ${complaint.status !== 'resolved' ? `
+                                <div class="mt-6 pt-6 border-t border-border">
+                                    <button type="button" onclick="addUpdate(${complaint.id})" class="btn-primary w-full">
+                                        <span class="flex items-center justify-center gap-2">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                                            </svg>
+                                            Add Update/Comment
+                                        </span>
+                                    </button>
+                                </div>
+                            ` : ''}
+                        </div>
+                    `;
+                } else {
+                    content.innerHTML = '<p class="text-text-secondary text-center py-8">Failed to load complaint details.</p>';
+                }
+            } catch (error) {
+                console.error('View complaint details error:', error);
+                content.innerHTML = '<p class="text-text-secondary text-center py-8">Error loading complaint details. Please try again.</p>';
+            }
+        }
+
+        // Make functions globally accessible
+        window.addUpdate = function(complaintId) {
+            console.log('addUpdate called with complaintId:', complaintId);
+            const modal = document.getElementById('add-update-modal');
+            const complaintIdInput = document.getElementById('update-complaint-id');
+            const updateMessage = document.getElementById('update-message');
+            
+            if (!modal) {
+                console.error('Add update modal not found');
+                alert('Update modal not found. Please refresh the page.');
+                return;
+            }
+            
+            if (complaintIdInput) {
+                complaintIdInput.value = complaintId;
+            }
+            
+            if (updateMessage) {
+                updateMessage.value = '';
+            }
+            
+            modal.classList.remove('hidden');
+        };
+
+        window.closeAddUpdateModal = function() {
+            const modal = document.getElementById('add-update-modal');
+            if (modal) modal.classList.add('hidden');
+        };
+
+        window.submitUpdate = async function() {
+            const complaintId = document.getElementById('update-complaint-id').value;
+            const message = document.getElementById('update-message').value.trim();
+            const submitBtn = document.getElementById('submit-update-btn');
+
+            if (!message) {
+                alert('Please enter an update message');
+                return;
+            }
+
+            const originalText = submitBtn.textContent;
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Submitting...';
+
+            try {
+                const { data } = await apiRequest(`/complaints/${complaintId}/updates`, {
+                    method: 'POST',
+                    body: JSON.stringify({ message })
+                });
+
+                if (data.success) {
+                    alert('Update added successfully!');
+                    closeAddUpdateModal();
+                    // Reload details if viewing
+                    const detailsModal = document.getElementById('complaint-details-modal');
+                    if (detailsModal && !detailsModal.classList.contains('hidden')) {
+                        await viewComplaintDetails(parseInt(complaintId));
+                    }
+                    // Reload complaints list
+                    if (isLoggedIn()) {
+                        await loadMyComplaints();
+                    }
+                } else {
+                    alert(data.message || 'Failed to add update');
+                }
+            } catch (error) {
+                console.error('Add update error:', error);
+                if (typeof handleApiError !== 'undefined') {
+                    handleApiError(error, 'Failed to add update');
+                } else {
+                    alert('Failed to add update. Please try again.');
+                }
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalText;
+            }
+        }
+
+        function closeComplaintDetails() {
+            const modal = document.getElementById('complaint-details-modal');
+            if (modal) modal.classList.add('hidden');
+        }
+
+        function closeSuccessModal() {
+            const modal = document.getElementById('success-modal');
+            if (modal) modal.classList.add('hidden');
+            if (isLoggedIn()) {
+                loadMyComplaints();
+            }
+        }
+
+        function startRealtimeUpdates() {
+            setInterval(async () => {
+                if (!isLoggedIn()) return;
+                try {
+                    const { data } = await apiRequest(`/complaints/updates?lastUpdateId=${lastUpdateId}`);
+                    if (data.success && data.data.updates.length > 0) {
+                        lastUpdateId = data.data.latestUpdateId;
+                        await loadMyComplaints();
+                    }
+                } catch (error) {
+                    console.error('Realtime updates error:', error);
+                }
+            }, 30000);
+        }
     </script>
+    <script src="../public/api.js"></script>
+    <script>
+        // Show/hide logout button based on login status
+        window.addEventListener('DOMContentLoaded', () => {
+            const loginLink = document.getElementById('login-link');
+            const logoutBtn = document.getElementById('logout-btn');
+            
+            if (isLoggedIn()) {
+                if (loginLink) loginLink.classList.add('hidden');
+                if (logoutBtn) logoutBtn.classList.remove('hidden');
+            } else {
+                if (loginLink) loginLink.classList.remove('hidden');
+                if (logoutBtn) logoutBtn.classList.add('hidden');
+            }
+        });
+    </script>
+    <script>
+        // Check authentication on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            updateAuthLinks();
+            
+            if (!isLoggedIn()) {
+                // Allow viewing but show login prompt on submit
+                console.log('User not logged in - will prompt on submit');
+            } else {
+                loadUserProfile();
+            }
+        });
+
+        // Update auth links
+        function updateAuthLinks() {
+            const loginLink = document.getElementById('login-link');
+            const logoutBtn = document.getElementById('logout-btn');
+            const profileSection = document.getElementById('profile-section');
+            
+            if (isLoggedIn()) {
+                if (loginLink) loginLink.classList.add('hidden');
+                if (logoutBtn) logoutBtn.classList.remove('hidden');
+                if (profileSection) profileSection.classList.remove('hidden');
+            } else {
+                if (loginLink) loginLink.classList.remove('hidden');
+                if (logoutBtn) logoutBtn.classList.add('hidden');
+                if (profileSection) profileSection.classList.add('hidden');
+            }
+        }
+    </script>
+    <script src="../public/profile-functions.js"></script>
+    <script>
+        // Initialize profile functions when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initProfileFunctions);
+        } else {
+            initProfileFunctions();
+        }
+    </script>
+    <!-- Profile Modal -->
+    <div id="profile-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4" style="background: transparent;">
+        <div class="bg-surface rounded-xl shadow-2xl max-w-md w-full border border-border max-h-[90vh] flex flex-col">
+            <div class="bg-gradient-to-r from-primary-600 to-primary-700 px-6 py-4 rounded-t-xl flex-shrink-0">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h2 class="text-xl font-bold text-white">Edit Profile</h2>
+                        <p class="text-sm text-primary-100 mt-0.5">Update your personal information</p>
+                    </div>
+                    <button type="button" onclick="closeProfileModal()" class="text-white hover:bg-white hover:bg-opacity-20 rounded-full p-1.5 transition-colors" aria-label="Close modal">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div class="overflow-y-auto flex-1">
+                <form id="profile-form" enctype="multipart/form-data" class="p-6">
+                    <div class="mb-6 text-center">
+                        <div class="relative inline-block group">
+                            <div class="absolute inset-0 rounded-full bg-primary opacity-0 group-hover:opacity-10 transition-opacity"></div>
+                            <img id="profile-preview" src="https://ui-avatars.com/api/?name=User&background=0078D7&color=fff&size=128&bold=true" alt="Profile Preview" class="w-28 h-28 rounded-full object-cover border-4 border-primary shadow-lg mx-auto bg-primary" />
+                            <label for="profile-picture-input" class="absolute bottom-0 right-0 bg-primary text-white rounded-full p-2.5 cursor-pointer hover:bg-primary-700 shadow-lg hover:shadow-xl transition-all transform hover:scale-110" aria-label="Change profile picture">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                </svg>
+                            </label>
+                            <input type="file" id="profile-picture-input" name="profile_picture" accept="image/*" class="hidden" />
+                        </div>
+                        <p class="text-xs text-text-secondary mt-3 font-medium">Click camera icon to upload</p>
+                        <p class="text-xs text-text-secondary mt-1">Max 5MB • JPG, PNG, GIF, WEBP</p>
+                    </div>
+                    <div class="border-t border-border mb-6"></div>
+                    <div class="space-y-4">
+                        <div>
+                            <label for="profile-fullname" class="block text-sm font-semibold text-text-primary mb-2">
+                                Full Name <span class="text-primary">*</span>
+                            </label>
+                            <input type="text" id="profile-fullname" name="fullname" class="input-field w-full focus:ring-2 focus:ring-primary focus:border-primary transition-all" required placeholder="Enter your full name" />
+                        </div>
+                        <div>
+                            <label for="profile-email" class="block text-sm font-semibold text-text-primary mb-2">
+                                Email Address
+                            </label>
+                            <input type="email" id="profile-email" class="input-field w-full bg-border-light cursor-not-allowed opacity-75" readonly />
+                            <p class="text-xs text-text-secondary mt-1.5">Email cannot be changed</p>
+                        </div>
+                        <div id="profile-agency-section" style="display: none;">
+                            <label for="profile-agency" class="block text-sm font-semibold text-text-primary mb-2">
+                                Agency
+                            </label>
+                            <input type="text" id="profile-agency" class="input-field w-full bg-border-light cursor-not-allowed opacity-75" readonly />
+                            <p class="text-xs text-text-secondary mt-1.5">Agency assignment is managed by administrators</p>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="flex gap-3 p-6 pt-4 border-t border-border bg-surface rounded-b-xl flex-shrink-0">
+                <button type="button" onclick="closeProfileModal()" class="btn-outline flex-1 font-medium hover:bg-border transition-colors">Cancel</button>
+                <button type="submit" form="profile-form" class="btn-primary flex-1 font-semibold shadow-lg hover:shadow-xl transition-all" id="profile-save-btn">
+                    <span class="flex items-center justify-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                        </svg>
+                        Save Changes
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
 <script id="dhws-dataInjector" src="../public/dhws-data-injector.js"></script>
 </body>
 </html>
