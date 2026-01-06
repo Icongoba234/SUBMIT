@@ -2,6 +2,9 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const db = require('../db');
 
+// Cache JWT secret and provide a clearer error when it's missing
+const JWT_SECRET = process.env.JWT_SECRET;
+
 // Register new user
 const register = async (req, res) => {
   try {
@@ -35,6 +38,15 @@ const register = async (req, res) => {
       });
     }
 
+    // Ensure JWT secret is configured to avoid partial registration with a token error
+    if (!JWT_SECRET) {
+      console.error('Register error: JWT_SECRET environment variable is not set');
+      return res.status(500).json({
+        success: false,
+        message: 'Server configuration error: authentication is temporarily unavailable'
+      });
+    }
+
     // Hash password
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
@@ -48,7 +60,7 @@ const register = async (req, res) => {
     // Generate JWT token
     const token = jwt.sign(
       { userId: result.insertId, email, role },
-      process.env.JWT_SECRET,
+      JWT_SECRET,
       { expiresIn: process.env.JWT_EXPIRES_IN || '7d' }
     );
 
@@ -85,6 +97,15 @@ const login = async (req, res) => {
       return res.status(400).json({
         success: false,
         message: 'Email and password are required'
+      });
+    }
+
+    // Ensure JWT secret is configured
+    if (!JWT_SECRET) {
+      console.error('Login error: JWT_SECRET environment variable is not set');
+      return res.status(500).json({
+        success: false,
+        message: 'Server configuration error: authentication is temporarily unavailable'
       });
     }
 
@@ -128,7 +149,7 @@ const login = async (req, res) => {
     // Generate JWT token
     const token = jwt.sign(
       { userId: user.id, email: user.email, role: user.role },
-      process.env.JWT_SECRET,
+      JWT_SECRET,
       { expiresIn: process.env.JWT_EXPIRES_IN || '7d' }
     );
 
