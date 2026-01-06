@@ -20,7 +20,10 @@ const getHomepageStats = async (req, res) => {
     try {
       const [avgTimeResult] = await db.execute(`
         SELECT AVG(DATEDIFF(
-          COALESCE((SELECT MIN(created_at) FROM complaint_updates WHERE complaint_id = c.id), c.updated_at, c.created_at),
+          COALESCE(
+            (SELECT MIN(created_at) FROM complaint_updates WHERE complaint_id = c.id),
+            c.created_at
+          ),
           c.created_at
         )) as avg_days
         FROM complaints c
